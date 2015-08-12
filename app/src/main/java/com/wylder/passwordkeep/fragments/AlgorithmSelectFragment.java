@@ -7,5 +7,5 @@ import android.app.Fragment;
  *
  * A fragment to display a list of Algorithms and their descriptions, and select one
  */
-public class AlgorithmSelectFragment extends Fragment{
+public class AlgorithmSelectFragment extends Fragment {
 }

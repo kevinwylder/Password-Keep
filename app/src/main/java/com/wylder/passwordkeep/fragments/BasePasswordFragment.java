@@ -7,5 +7,5 @@ import android.app.Fragment;
  *
  * A fragment to change the Base Password of the application.
  */
-public class BasePasswordFragment extends Fragment{
+public class BasePasswordFragment extends Fragment {
 }
