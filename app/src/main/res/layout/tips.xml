@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tips for a secure Base Password"
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ff000000"
+        android:layout_below="@+id/checkBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password_tip_1"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/imageView2" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:src="@drawable/ic_favorite_black_48dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_marginLeft="5dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password_tip_2"
+        android:id="@+id/textView4"
+        android:layout_alignTop="@+id/imageView3"
+        android:layout_toEndOf="@+id/imageView3"
+        android:layout_alignBottom="@+id/imageView3" />
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageView3"
+        android:src="@drawable/ic_spellcheck_black_48dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password_tip_3"
+        android:id="@+id/textView5"
+        android:layout_alignTop="@+id/imageView4"
+        android:layout_toStartOf="@+id/imageView4"
+        android:layout_alignBottom="@+id/imageView4" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView4"
+        android:src="@drawable/ic_gesture_black_48dp"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/warning_password"
+        android:id="@+id/textView2"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+
+</RelativeLayout>

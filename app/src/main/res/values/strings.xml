@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Password Keep</string>
+    <string name="warning_password">IMPORTANT: We do not reccomend changing your base password often, as the changes made in this app may not reflect the changes on your actual passwords.</string>
+    <string name="password_tip_1">Pick something that you\'ll remember, becuase changing it will require you to change all your website passwords</string>
+    <string name="password_tip_2">Use a password with 8 or more characters, at least one capital, and at least one number. This will satisfy most websites\' password requirements</string>
+    <string name="password_tip_3">If you want a simple base password, use a more complex algorithm that will satisfy these constraints</string>
 </resources>
