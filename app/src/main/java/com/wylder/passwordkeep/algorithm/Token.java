@@ -9,10 +9,26 @@ public interface Token {
 
     /**
      * Return any subtoken parameters.
-     * @return
+     * @return 0, 1, or 2 tokens passed in as parameters to this token
      */
     Token[] getParameters();
 
-    int describeSelf();
+    DataType getNextParam();
 
+    /**
+     * Give another parameter token to this token
+     * @param child the token parameter to add
+     */
+    void giveParameter(Token child) throws SyntaxError;
+
+    /**
+     * create a human readable string of the algorithm description
+     * @return a constructed string explanation
+     */
+    String toString();
+
+    /**
+     * @return a string that describes the operation
+     */
+    String getOperatorName();
 }

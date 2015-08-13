@@ -6,4 +6,9 @@ package com.wylder.passwordkeep.algorithm;
  * An error thrown when the algorithm cannot be performed
  */
 public class EvaluationError extends Exception {
+
+    public EvaluationError(String message){
+        super(message);
+    }
+
 }
