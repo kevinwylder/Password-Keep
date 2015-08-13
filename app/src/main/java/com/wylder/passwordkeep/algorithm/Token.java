@@ -7,6 +7,12 @@ package com.wylder.passwordkeep.algorithm;
  */
 public interface Token {
 
+    /**
+     * Return any subtoken parameters.
+     * @return
+     */
     Token[] getParameters();
+
+    int describeSelf();
 
 }
