@@ -18,10 +18,10 @@ public class Algorithm {
      * @return a password string
      * @throws EvaluationError when the
      */
-    public String generatePassword(StringBuilder basePassword, String siteName) throws EvaluationError {
+    public String generatePassword(String basePassword, String siteName) throws EvaluationError {
         StringBuilder builder = new StringBuilder(basePassword);
         for(A action : actions){
-            action.perform(basePassword, siteName);
+            action.perform(builder, siteName);
         }
         return builder.toString();
     }
