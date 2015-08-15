@@ -8,11 +8,13 @@ import com.wylder.passwordkeep.algorithm.Token;
 
 /**
  * Created by kevin on 8/12/15.
+ *
+ * returns the number of characters in the site name
  */
 public class len implements I {
     @Override
-    public int evaluate() throws EvaluationError {
-        return 0;
+    public int evaluate(String siteName) throws EvaluationError {
+        return siteName.length();
     }
 
     @Override
@@ -22,16 +24,16 @@ public class len implements I {
 
     @Override
     public DataType getNextParam() {
-        return null;
+        return DataType.V;
     }
 
     @Override
     public void giveParameter(Token child) throws SyntaxError {
-
+        throw new SyntaxError("Cannot give len a parameter");
     }
 
     @Override
     public String getOperatorName() {
-        return null;
+        return "len";
     }
 }

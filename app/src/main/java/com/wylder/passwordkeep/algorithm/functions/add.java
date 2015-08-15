@@ -23,7 +23,7 @@ public class add implements A {
      */
     @Override
     public void perform(StringBuilder basePassword, String siteName) throws EvaluationError {
-        basePassword.append(parameter.evaluate());
+        basePassword.append(parameter.evaluate(siteName));
     }
 
     @Override

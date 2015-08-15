@@ -20,7 +20,7 @@ public class constant implements I {
     }
 
     @Override
-    public int evaluate() throws EvaluationError {
+    public int evaluate(String siteName) throws EvaluationError {
         return value;
     }
 
@@ -41,7 +41,7 @@ public class constant implements I {
 
     @Override
     public String getOperatorName() {
-        return null;
+        return "constant";
     }
 
     @Override

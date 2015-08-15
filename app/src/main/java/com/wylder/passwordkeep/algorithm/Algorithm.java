@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Algorithm {
 
-    private ArrayList<A> actions;
+    private ArrayList<A> actions = new ArrayList<A>();
 
     /**
      * generate a password variation based of the website's name
@@ -26,7 +26,7 @@ public class Algorithm {
         return builder.toString();
     }
 
-    /**
+    /*
      * Used by AlgorithmFactory to create the behaivor
      * @param action
      */
@@ -39,7 +39,18 @@ public class Algorithm {
      */
     @Override
     public String toString(){
-        return "";
+        if(actions.size() == 1){
+            return actions.get(0).toString();
+        } else {
+            StringBuilder builder = new StringBuilder("First, ");
+            for(int i = 0; i < actions.size(); i++){
+                builder.append(actions.get(i).toString());
+                if(i < actions.size() - 1){
+                    builder.append(", then ");
+                }
+            }
+            return builder.toString();
+        }
     }
 
     /**

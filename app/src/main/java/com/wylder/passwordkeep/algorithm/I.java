@@ -7,6 +7,6 @@ package com.wylder.passwordkeep.algorithm;
  */
 public interface I extends Token{
 
-    int evaluate() throws EvaluationError;
+    int evaluate(String siteName) throws EvaluationError;
 
 }

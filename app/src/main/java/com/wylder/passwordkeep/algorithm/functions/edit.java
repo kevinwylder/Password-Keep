@@ -22,26 +22,48 @@ public class edit implements A {
 
     @Override
     public void perform(StringBuilder basePassword, String siteName) throws EvaluationError {
-
+        if(character == null || position == null) throw new EvaluationError("Incomplete edit action");
+        if(siteName.length() == 0) throw new EvaluationError("Cannot edit an empty site name");
+        char edit = character.evaluate(siteName);
+        int pos = position.evaluate(siteName) % basePassword.length();
+        basePassword.replace(pos, pos + 1, "" + edit);
     }
 
     @Override
     public Token[] getParameters() {
-        return new Token[0];
+        if(character == null){
+            return new Token[0];
+        }else if(position == null){
+            return new Token[]{character};
+        }else {
+            return new Token[]{character, position};
+        }
     }
 
     @Override
     public DataType getNextParam() {
-        return null;
+        if(character == null) {
+            return DataType.C;
+        } else if(position == null) {
+            return DataType.I;
+        } else {
+            return DataType.V;
+        }
     }
 
     @Override
     public void giveParameter(Token child) throws SyntaxError {
-
+        if(child instanceof C && character == null && position == null) {
+            character = (C) child;
+        }else if(child instanceof I && character != null && position == null){
+            position = (I) child;
+        }else{
+            throw new SyntaxError("invalid parameter ([" + child.toString() + "]) for edit");
+        }
     }
 
     @Override
     public String getOperatorName() {
-        return null;
+        return "edit";
     }
 }

@@ -16,13 +16,15 @@ public class capitalize implements C {
     C parameter = null;
 
     @Override
-    public char evaluate() throws EvaluationError {
-        return Character.toUpperCase(parameter.evaluate());
+    public char evaluate(String siteName) throws EvaluationError {
+        if(parameter == null) throw new EvaluationError("Incomplete Algorithm, capitalizing nothing");
+        return Character.toUpperCase(parameter.evaluate(siteName));
     }
 
     @Override
     public Token[] getParameters() {
-        return new Token[]{parameter};
+        if (parameter == null) return new Token[0];
+        else return new Token[]{parameter};
     }
 
     @Override
