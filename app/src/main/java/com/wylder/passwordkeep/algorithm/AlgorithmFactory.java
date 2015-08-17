@@ -158,7 +158,7 @@ public class AlgorithmFactory {
                 value = value >> 1;
             }
         }
-        while(!programCode.pop()){}
+    //    while(!programCode.pop()){}
         Log.e("KevinRuntime","code length: " + programCode.size());
         Iterator<Boolean> iterator = programCode.iterator();
         StringBuilder builder = new StringBuilder("binary decoded: ");

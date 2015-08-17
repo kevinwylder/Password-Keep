@@ -8,7 +8,7 @@ import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
 
-import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Created by kevin on 8/12/15.
@@ -70,10 +70,10 @@ public class edit implements A {
     }
 
     @Override
-    public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
+    public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
         if(position == null || character == null) throw new SyntaxError("Incomplete tree");
-        bin.offer(false);
-        bin.offer(false);
+        bin.push(false);
+        bin.push(false);
         character.getBytecode(bin);
         position.getBytecode(bin);
     }

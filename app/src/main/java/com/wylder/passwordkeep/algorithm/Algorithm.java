@@ -3,7 +3,7 @@ package com.wylder.passwordkeep.algorithm;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Stack;
 
 /**
  * Created by kevin on 8/9/15.
@@ -33,20 +33,21 @@ public class Algorithm {
      * to generate the hex definition of this algorithm
      */
     public String getHex() throws SyntaxError {
-        LinkedBlockingQueue<Boolean> queue = new LinkedBlockingQueue<>();
-        for(A action: actions){
-            action.getBytecode(queue);
-        }
+        Stack<Boolean> bits = new Stack<>();
         // add the leading bit that signals a start to the code
-        queue.offer(true);
+        bits.push(true);
+        for(A action: actions){
+            // fill the stack with bits
+            action.getBytecode(bits);
+        }
         // convert the queue to hex code
         StringBuilder builder = new StringBuilder();
         StringBuilder log = new StringBuilder("binary encoded: ");
         while (true){
             int value = 0;
-            int iterateTo = Math.min(4, queue.size());
+            int iterateTo = Math.min(4, bits.size());
             for (int i = 0; i < iterateTo; i++) {
-                boolean poll = queue.poll();
+                boolean poll = bits.pop();
                 if(poll){
                     log.append("1");
                 }else log.append("0");

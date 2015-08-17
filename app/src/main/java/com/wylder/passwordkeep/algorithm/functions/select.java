@@ -7,7 +7,7 @@ import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
 
-import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Created by kevin on 8/12/15.
@@ -21,7 +21,7 @@ public class select implements C {
     @Override
     public char evaluate(String siteName) throws EvaluationError {
         if(position == null) throw new EvaluationError("Incomplete Algorithm");
-        return siteName.charAt(position.evaluate(siteName));
+        return siteName.charAt(position.evaluate(siteName) % siteName.length()g);
     }
 
     @Override
@@ -34,10 +34,10 @@ public class select implements C {
     }
 
     @Override
-    public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
+    public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
         if(position == null) throw new SyntaxError("Incomplete tree");
-        bin.offer(true);
-        bin.offer(true);
+        bin.push(true);
+        bin.push(true);
         position.getBytecode(bin);
     }
 

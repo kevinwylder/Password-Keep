@@ -1,6 +1,6 @@
 package com.wylder.passwordkeep.algorithm;
 
-import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Created by kevin on 8/12/15.
@@ -43,5 +43,5 @@ public interface Token {
      * @param bin the location to write the data
      * @throws SyntaxError if the tree is incomplete
      */
-    void getBytecode(Queue<Boolean> bin) throws SyntaxError;
+    void getBytecode(Stack<Boolean> bin) throws SyntaxError;
 }
