@@ -37,8 +37,8 @@ public class eval implements I {
 
     @Override
     public DataType getNextParam() {
-        if(parameter == null) return DataType.C;
-        else return DataType.V;
+        if(parameter == null) return DataType.CHAR;
+        else return DataType.VOID;
     }
 
     @Override

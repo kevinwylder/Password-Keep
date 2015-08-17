@@ -34,9 +34,9 @@ public class select implements C {
     @Override
     public DataType getNextParam() {
         if(position == null){
-            return DataType.I;
+            return DataType.INT;
         }else{
-            return DataType.V;
+            return DataType.VOID;
         }
     }
 

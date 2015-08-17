@@ -40,7 +40,7 @@ public class sum implements I {
 
     @Override
     public DataType getNextParam() {
-        return DataType.V;
+        return DataType.VOID;
     }
 
     @Override

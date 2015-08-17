@@ -34,9 +34,9 @@ public class add implements A {
     @Override
     public DataType getNextParam() {
         if(parameter == null){
-            return DataType.C;
+            return DataType.CHAR;
         }else{
-            return DataType.V;
+            return DataType.VOID;
         }
     }
 

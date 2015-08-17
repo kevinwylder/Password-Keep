@@ -6,8 +6,8 @@ package com.wylder.passwordkeep.algorithm;
  * an enum of all the data types in this language
  */
 public enum DataType {
-    A,  // action
-    C,  // char
-    I,  // int
-    V   // void
+    ACTION,  // action
+    CHAR,  // char
+    INT,  // int
+    VOID   // void
 }

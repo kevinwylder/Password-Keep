@@ -31,9 +31,9 @@ public class remove implements A {
     @Override
     public DataType getNextParam() {
         if(position == null){
-            return DataType.I;
+            return DataType.INT;
         }else {
-            return DataType.V;
+            return DataType.VOID;
         }
     }
 

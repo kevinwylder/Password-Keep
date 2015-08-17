@@ -49,11 +49,11 @@ public class rotate implements C {
     @Override
     public DataType getNextParam() {
         if(startChar == null){
-            return DataType.C;
+            return DataType.CHAR;
         }else if(rotation == null){
-            return DataType.I;
+            return DataType.INT;
         }else {
-            return DataType.V;
+            return DataType.VOID;
         }
     }
 

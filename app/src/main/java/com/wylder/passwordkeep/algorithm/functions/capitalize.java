@@ -30,9 +30,9 @@ public class capitalize implements C {
     @Override
     public DataType getNextParam() {
         if(parameter == null){
-            return DataType.C;
+            return DataType.CHAR;
         }else{
-            return DataType.V;
+            return DataType.VOID;
         }
     }
 

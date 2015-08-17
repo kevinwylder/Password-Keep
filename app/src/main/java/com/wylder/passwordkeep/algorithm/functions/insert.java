@@ -44,11 +44,11 @@ public class insert implements A {
     @Override
     public DataType getNextParam() {
         if(character == null){
-            return DataType.C;
+            return DataType.CHAR;
         }else if(position == null){
-            return DataType.I;
+            return DataType.INT;
         }else{
-            return DataType.V;
+            return DataType.VOID;
         }
     }
 

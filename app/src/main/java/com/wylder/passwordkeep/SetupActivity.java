@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.wylder.passwordkeep.algorithm.Algorithm;
 import com.wylder.passwordkeep.algorithm.AlgorithmFactory;
+import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 
 /**
@@ -22,14 +23,14 @@ public class SetupActivity extends Activity{
         TextView tv = new TextView(this);
         setContentView(tv);
         try {
-            Algorithm test1 = factory.buildAlgorithm("5730E11");
-       //     tv.setText(test1.generatePassword("password", "facebook"));
+            Algorithm test1 = factory.buildAlgorithm("1ac8f24");
+            tv.setText(test1.generatePassword("password", "facebook"));
         } catch (SyntaxError error) {
             tv.setText("Syntax error: " + error.getMessage());
             error.printStackTrace();
-        } // catch (EvaluationError error){
-        //    tv.setText("Eval error: " + error.getMessage());
-      //  }
+        }  catch (EvaluationError error) {
+            tv.setText("Eval error: " + error.getMessage());
+        }
     }
 
 }

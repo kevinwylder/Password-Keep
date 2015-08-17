@@ -32,9 +32,9 @@ public class letter implements C {
     @Override
     public DataType getNextParam() {
         if(letter == null){
-            return DataType.I;
+            return DataType.INT;
         }else{
-            return DataType.V;
+            return DataType.VOID;
         }
     }
 

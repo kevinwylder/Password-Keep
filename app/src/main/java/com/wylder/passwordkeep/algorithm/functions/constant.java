@@ -31,7 +31,7 @@ public class constant implements I {
 
     @Override
     public DataType getNextParam() {
-        return DataType.V;
+        return DataType.VOID;
     }
 
     @Override

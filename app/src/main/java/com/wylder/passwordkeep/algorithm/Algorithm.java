@@ -26,6 +26,13 @@ public class Algorithm {
         return builder.toString();
     }
 
+    /**
+     * to generate the hex definition of this algorithm
+     */
+    public String getHex(){
+        return "";
+    }
+
     /*
      * Used by AlgorithmFactory to create the behaivor
      * @param action
