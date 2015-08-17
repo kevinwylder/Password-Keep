@@ -17,7 +17,7 @@ public interface Token {
 
     /**
      * Gets the datatype of the next parameter.
-     * @return the DataType enum representing the bitcode type (A, I, or C)
+     * @return the DataType enum representing the bitcode type (A, I, o
      */
     DataType getNextParam();
 

@@ -64,7 +64,7 @@ public class rotate implements C {
     public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
         if(startChar == null || rotation == null) throw new SyntaxError("Incomplete tree");
         bin.offer(true);
-        bin.offer(true);
+        bin.offer(false);
         startChar.getBytecode(bin);
         rotation.getBytecode(bin);
     }

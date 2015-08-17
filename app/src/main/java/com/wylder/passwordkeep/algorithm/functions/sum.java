@@ -58,6 +58,6 @@ public class sum implements I {
     @Override
     public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
         bin.offer(true);
-        bin.offer(true);
+        bin.offer(false);
     }
 }

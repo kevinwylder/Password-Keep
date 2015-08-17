@@ -24,7 +24,7 @@ public class SetupActivity extends Activity{
         setContentView(tv);
         try {
             Algorithm test1 = factory.buildAlgorithm("1ac8f24");
-            tv.setText(test1.generatePassword("password", "facebook"));
+            tv.setText(test1.generatePassword("zyYp745g", "reddit") + " " + test1.getHex());
         } catch (SyntaxError error) {
             tv.setText("Syntax error: " + error.getMessage());
             error.printStackTrace();

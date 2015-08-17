@@ -74,9 +74,9 @@ public class AlgorithmFactory {
         if(data == DataType.ACTION){         // Datatype A
             if(bit1 && bit2){
                 return new add();           // 11 add
-            }else if(bit1 && !bit2){
+            }else if(bit1){
                 return new insert();        // 10 insert
-            }else if(!bit1 && bit2){
+            }else if(bit2){
                 return new remove();        // 01 remove
             }else {
                 return new edit();          // 00 edit
@@ -84,9 +84,9 @@ public class AlgorithmFactory {
         }else if(data == DataType.CHAR){   // Datatype C
             if(bit1 && bit2){
                 return new select();        // 11 select
-            }else if(bit1 && !bit2){
+            }else if(bit1){
                 return new rotate();        // 10 rotate
-            }else if(!bit1 && bit2){
+            }else if(bit2){
                 return new letter();        // 01 letter
             }else {
                 return new capitalize();    // 00 capitalize
@@ -94,9 +94,9 @@ public class AlgorithmFactory {
         }else if(data == DataType.INT){   // Datatype I
             if(bit1 && bit2){
                 return new len();           // 11 len
-            }else if(bit1 && !bit2){
+            }else if(bit1){
                 return new sum();           // 10 sum
-            }else if(!bit1 && bit2){
+            }else if(bit2){
                 return new eval();          // 01 eval
             }else {
                 return new constant();      // 00 constant
@@ -154,7 +154,6 @@ public class AlgorithmFactory {
         for (int i = hexCode.length() - 1; i >= 0; i--) {
             int value = Integer.parseInt("" + hexCode.charAt(i), 16);
             for(int j = 0; j < 4; j++){
-                Log.e("KevinRuntime", value + "");
                 programCode.push((value & 0x1) == 1);
                 value = value >> 1;
             }
@@ -162,7 +161,7 @@ public class AlgorithmFactory {
         while(!programCode.pop()){}
         Log.e("KevinRuntime","code length: " + programCode.size());
         Iterator<Boolean> iterator = programCode.iterator();
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder("binary decoded: ");
         while(iterator.hasNext()){
             if(iterator.next()){
                 builder.append("1");

@@ -42,7 +42,7 @@ public class remove implements A {
     @Override
     public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
         if(position == null) throw new SyntaxError("Incomplete tree");
-        bin.offer(true);
+        bin.offer(false);
         bin.offer(true);
         position.getBytecode(bin);
     }

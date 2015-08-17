@@ -47,7 +47,7 @@ public class eval implements I {
     public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
         if(parameter == null) throw new SyntaxError("Incomplete tree");
         bin.offer(true);
-        bin.offer(true);
+        bin.offer(false);
         parameter.getBytecode(bin);
     }
 

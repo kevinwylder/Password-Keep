@@ -41,8 +41,8 @@ public class capitalize implements C {
     @Override
     public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
         if(parameter == null) throw new SyntaxError("Incomplete tree");
-        bin.offer(true);
-        bin.offer(true);
+        bin.offer(false);
+        bin.offer(false);
         parameter.getBytecode(bin);
     }
 

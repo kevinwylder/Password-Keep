@@ -43,7 +43,7 @@ public class letter implements C {
     @Override
     public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
         if(letter == null) throw new SyntaxError("Incomplete tree");
-        bin.offer(true);
+        bin.offer(false);
         bin.offer(true);
         letter.getBytecode(bin);
     }

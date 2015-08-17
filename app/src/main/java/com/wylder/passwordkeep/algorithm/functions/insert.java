@@ -70,7 +70,7 @@ public class insert implements A {
     public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
         if(position == null || character == null) throw new SyntaxError("Incomplete tree");
         bin.offer(true);
-        bin.offer(true);
+        bin.offer(false);
         character.getBytecode(bin);
         position.getBytecode(bin);
     }
