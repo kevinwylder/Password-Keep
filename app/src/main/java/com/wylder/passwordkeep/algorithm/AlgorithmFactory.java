@@ -1,7 +1,5 @@
 package com.wylder.passwordkeep.algorithm;
 
-import android.util.Log;
-
 import com.wylder.passwordkeep.algorithm.functions.add;
 import com.wylder.passwordkeep.algorithm.functions.capitalize;
 import com.wylder.passwordkeep.algorithm.functions.constant;
@@ -16,7 +14,6 @@ import com.wylder.passwordkeep.algorithm.functions.select;
 import com.wylder.passwordkeep.algorithm.functions.sum;
 
 import java.util.EmptyStackException;
-import java.util.Iterator;
 import java.util.Stack;
 
 /**
@@ -158,18 +155,7 @@ public class AlgorithmFactory {
                 value = value >> 1;
             }
         }
-    //    while(!programCode.pop()){}
-        Log.e("KevinRuntime","code length: " + programCode.size());
-        Iterator<Boolean> iterator = programCode.iterator();
-        StringBuilder builder = new StringBuilder("binary decoded: ");
-        while(iterator.hasNext()){
-            if(iterator.next()){
-                builder.append("1");
-            }else{
-                builder.append("0");
-            }
-        }
-        Log.e("KevinRuntime", builder.toString());
+        while(!programCode.pop()){}
         return compile();
     }
 

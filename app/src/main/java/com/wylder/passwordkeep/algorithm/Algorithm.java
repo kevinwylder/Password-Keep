@@ -1,7 +1,5 @@
 package com.wylder.passwordkeep.algorithm;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -42,22 +40,16 @@ public class Algorithm {
         }
         // convert the queue to hex code
         StringBuilder builder = new StringBuilder();
-        StringBuilder log = new StringBuilder("binary encoded: ");
         while (true){
             int value = 0;
             int iterateTo = Math.min(4, bits.size());
             for (int i = 0; i < iterateTo; i++) {
-                boolean poll = bits.pop();
-                if(poll){
-                    log.append("1");
-                }else log.append("0");
-                value += (poll) ? Math.pow(2, i) : 0;
+                value += (bits.pop()) ? Math.pow(2, i) : 0;
             }
             builder.append(Integer.toHexString(value));
-            if(iterateTo != 4) break;
+            if(bits.size() == 0) break;
         }
-        Log.e("KevinRuntime",log.toString());
-        return builder.toString();
+        return builder.reverse().toString();
     }
 
     /**

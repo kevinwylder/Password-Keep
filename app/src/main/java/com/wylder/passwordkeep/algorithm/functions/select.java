@@ -21,7 +21,7 @@ public class select implements C {
     @Override
     public char evaluate(String siteName) throws EvaluationError {
         if(position == null) throw new EvaluationError("Incomplete Algorithm");
-        return siteName.charAt(position.evaluate(siteName) % siteName.length()g);
+        return siteName.charAt(position.evaluate(siteName) % siteName.length());
     }
 
     @Override
