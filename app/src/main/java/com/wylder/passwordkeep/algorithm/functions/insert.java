@@ -8,6 +8,8 @@ import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
 
+import java.util.Queue;
+
 /**
  * Created by kevin on 8/12/15.
  *
@@ -61,6 +63,16 @@ public class insert implements A {
         }else{
             throw new SyntaxError("incorrect parameter ([" + child.toString() + "])");
         }
+    }
+
+
+    @Override
+    public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
+        if(position == null || character == null) throw new SyntaxError("Incomplete tree");
+        bin.offer(true);
+        bin.offer(true);
+        character.getBytecode(bin);
+        position.getBytecode(bin);
     }
 
     @Override

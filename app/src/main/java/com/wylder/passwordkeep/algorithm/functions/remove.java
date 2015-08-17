@@ -7,6 +7,8 @@ import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
 
+import java.util.Queue;
+
 /**
  * Created by kevin on 8/12/15.
  *
@@ -35,6 +37,14 @@ public class remove implements A {
         }else {
             return DataType.VOID;
         }
+    }
+
+    @Override
+    public void getBytecode(Queue<Boolean> bin) throws SyntaxError {
+        if(position == null) throw new SyntaxError("Incomplete tree");
+        bin.offer(true);
+        bin.offer(true);
+        position.getBytecode(bin);
     }
 
     @Override

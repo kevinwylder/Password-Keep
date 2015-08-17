@@ -1,5 +1,7 @@
 package com.wylder.passwordkeep.algorithm;
 
+import java.util.Queue;
+
 /**
  * Created by kevin on 8/12/15.
  *
@@ -13,6 +15,10 @@ public interface Token {
      */
     Token[] getParameters();
 
+    /**
+     * Gets the datatype of the next parameter.
+     * @return the DataType enum representing the bitcode type (A, I, or C)
+     */
     DataType getNextParam();
 
     /**
@@ -31,4 +37,11 @@ public interface Token {
      * @return a string that describes the operation
      */
     String getOperatorName();
+
+    /**
+     * push the binary representation of this token to the queue
+     * @param bin the location to write the data
+     * @throws SyntaxError if the tree is incomplete
+     */
+    void getBytecode(Queue<Boolean> bin) throws SyntaxError;
 }
