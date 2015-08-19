@@ -8,6 +8,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import com.wylder.passwordkeep.algorithm.A;
+import com.wylder.passwordkeep.algorithm.Algorithm;
+
 import java.util.ArrayList;
 
 /**
@@ -25,27 +28,58 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
     float columns = 1;
 
     ArrayList<TokenBox> actions = new ArrayList<>();
+    ArrayList<TokenBox> boxes = new ArrayList<>();
 
     SurfaceHolder holder;
 
+    /**
+     * Constructor to create an algorithm starting from nothing
+     * @param context
+     * @param attributeSet
+     */
     public AlgorithmView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        init();
-    }
-
-    public AlgorithmView(Context ctx){
-        super(ctx);
+        this.setOnTouchListener(this);
         init();
     }
 
     /**
-     * helper method to initialize variables and set listeners
+     * Constructor to view an algorithm
+     * @param ctx
+     * @param algorithm
+     */
+    public AlgorithmView(Context ctx, Algorithm algorithm){
+        super(ctx);
+        A[] actions = algorithm.getActions();
+        actions[0].get
+        init();
+    }
+
+    /**
+     * helper method to initialize variables
      */
     private void init(){
         holder = this.getHolder();
-        this.setOnTouchListener(this);
         ONE_DIP = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
         padding = ONE_DIP * 7;
+    }
+
+    /**
+     * Method called when onTouch has determined a cell has been clicked
+     * @param row
+     * @param column
+     */
+    private void onTokenClick(int row, int column){
+
+    }
+
+    private void findRowsAndColumns(){
+
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return false;
     }
 
     @Override
@@ -64,12 +98,4 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
 
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
-    }
-
-    private void animateBox(boolean row, boolean column){
-
-    }
 }
