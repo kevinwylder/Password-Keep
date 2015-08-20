@@ -5,8 +5,8 @@ package com.wylder.passwordkeep.algorithm;
  *
  * an interface that defines a char that can be evaluated for.
  */
-public interface C extends Token{
+public abstract class C extends Token {
 
-    char evaluate(String siteName) throws EvaluationError;
+    public abstract char evaluate(String siteName) throws EvaluationError;
 
 }

@@ -5,8 +5,8 @@ package com.wylder.passwordkeep.algorithm;
  *
  * an interface to define an action that can be performed to a password based off the site name.
  */
-public interface A extends Token{
+public abstract class A extends Token{
 
-    void perform(StringBuilder basePassword, String siteName) throws EvaluationError;
+    public abstract void perform(StringBuilder basePassword, String siteName) throws EvaluationError;
 
 }

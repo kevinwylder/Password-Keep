@@ -5,8 +5,8 @@ package com.wylder.passwordkeep.algorithm;
  *
  * An interface to describe an integer that can be evaluated.
  */
-public interface I extends Token{
+public abstract class I extends Token {
 
-    int evaluate(String siteName) throws EvaluationError;
+    public abstract int evaluate(String siteName) throws EvaluationError;
 
 }

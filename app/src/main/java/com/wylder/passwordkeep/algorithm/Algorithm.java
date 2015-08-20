@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 public class Algorithm {
 
-    private ArrayList<A> actions = new ArrayList<A>();
+    private ArrayList<A> actions = new ArrayList<>();
 
     /**
      * generate a password variation based of the website's name
