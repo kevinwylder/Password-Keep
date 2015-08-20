@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 import com.wylder.passwordkeep.algorithm.DataType;
+import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.ArrayList;
@@ -53,11 +54,26 @@ public class TokenBox  {
 
     /**
      * Method for AlgorithmView to set this box's token
-     * @param token
+     * @param token the token to give to this box
      */
     public void setToken(Token token){
         this.token = token;
         this.text = token.getOperatorName();
+
+    }
+
+    /**
+     * method to construct it's token representation
+     * @return the Token subtree of this box
+     */
+    public Token getToken() throws SyntaxError {
+        if(token == null){
+            throw new SyntaxError("Incomplete tree");
+        }
+        for(TokenBox child : children){
+            token.giveParameter(child.getToken());
+        }
+        return token;
     }
 
     /**
@@ -113,6 +129,20 @@ public class TokenBox  {
                 size += box.rowSpan();
             }
             return size;
+        }
+    }
+
+    /**
+     * method to set the row
+     * @param row
+     */
+    public void setRow(int row){
+        this.row = row;
+        int cumulative = 0;
+        for (int i = 0; i < children.size(); i++) {
+            TokenBox box = children.get(i);
+            box.setRow(row + cumulative);
+            cumulative += box.rowSpan();
         }
     }
 

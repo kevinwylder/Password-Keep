@@ -8,9 +8,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-import com.wylder.passwordkeep.algorithm.A;
-import com.wylder.passwordkeep.algorithm.Algorithm;
-
 import java.util.ArrayList;
 
 /**
@@ -28,7 +25,6 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
     float columns = 1;
 
     ArrayList<TokenBox> actions = new ArrayList<>();
-    ArrayList<TokenBox> boxes = new ArrayList<>();
 
     SurfaceHolder holder;
 
@@ -40,25 +36,6 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
     public AlgorithmView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.setOnTouchListener(this);
-        init();
-    }
-
-    /**
-     * Constructor to view an algorithm
-     * @param ctx
-     * @param algorithm
-     */
-    public AlgorithmView(Context ctx, Algorithm algorithm){
-        super(ctx);
-        A[] actions = algorithm.getActions();
-        actions[0].get
-        init();
-    }
-
-    /**
-     * helper method to initialize variables
-     */
-    private void init(){
         holder = this.getHolder();
         ONE_DIP = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
         padding = ONE_DIP * 7;
@@ -73,8 +50,16 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
 
     }
 
-    private void findRowsAndColumns(){
-
+    /**
+     * method to set each box's row to the proper position so there are no overlaps or gaps
+     */
+    private void setRows(){
+        int cumulative = 0;
+        for (int i = 0; i < actions.size(); i++) {
+            TokenBox box = actions.get(i);
+            box.setRow(cumulative);
+            cumulative += box.rowSpan();
+        }
     }
 
     @Override
