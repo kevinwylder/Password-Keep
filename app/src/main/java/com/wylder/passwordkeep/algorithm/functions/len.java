@@ -1,7 +1,6 @@
 package com.wylder.passwordkeep.algorithm.functions;
 
 import com.wylder.passwordkeep.algorithm.DataType;
-import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
@@ -13,22 +12,26 @@ import java.util.Stack;
  *
  * returns the number of characters in the site name
  */
-public class len implements I {
-
+public class len extends I {
 
     @Override
-    public int evaluate(String siteName) throws EvaluationError {
+    public int evaluate(String siteName) {
         return siteName.length();
     }
 
     @Override
-    public Token[] getParameters() {
-        return new Token[0];
+    public DataType[] getParameterTypes() {
+        return new DataType[0];
     }
 
     @Override
-    public DataType getNextParam() {
+    public DataType getNextParameterType() {
         return DataType.VOID;
+    }
+
+    @Override
+    public DataType getDataType() {
+        return DataType.INT;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class len implements I {
     }
 
     @Override
-    public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
+    public void getBytecode(Stack<Boolean> bin) {
         bin.push(true);
         bin.push(true);
     }

@@ -1,10 +1,8 @@
 package com.wylder.passwordkeep.algorithm.functions;
 
 import com.wylder.passwordkeep.algorithm.DataType;
-import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -13,32 +11,27 @@ import java.util.Stack;
  *
  * An integer stored in the next 6 bits of the program
  */
-public class constant implements I {
+public class constant extends I {
 
-    private int value;
+    private int value = 0;
 
     public void setValue(int value){
         this.value = value;
     }
 
     @Override
-    public int evaluate(String siteName) throws EvaluationError {
+    public int evaluate(String siteName) {
         return value;
     }
 
     @Override
-    public Token[] getParameters() {
-        return new Token[0];
+    public DataType getDataType(){
+        return DataType.INT;
     }
 
     @Override
-    public DataType getNextParam() {
-        return DataType.VOID;
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        throw new SyntaxError("Trying to give constant a parameter");
+    public DataType[] getParameterTypes() {
+        return new DataType[0];
     }
 
     @Override
@@ -56,8 +49,4 @@ public class constant implements I {
         }
     }
 
-    @Override
-    public String toString(){
-        return "" + value;
-    }
 }

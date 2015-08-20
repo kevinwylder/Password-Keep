@@ -5,7 +5,6 @@ import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -14,49 +13,33 @@ import java.util.Stack;
  *
  * the nth character of the site name.
  */
-public class select implements C {
-
-    I position;
+public class select extends C {
 
     @Override
-    public char evaluate(String siteName) throws EvaluationError {
-        if(position == null) throw new EvaluationError("Incomplete Algorithm");
-        return siteName.charAt(position.evaluate(siteName) % siteName.length());
+    public char evaluate(String siteName) throws EvaluationError, SyntaxError {
+        int position = ((I) getParameter(DataType.INT, 0)).evaluate(siteName);
+        position %= siteName.length();
+        if(position < 0) position += siteName.length();
+        return siteName.charAt(position);
     }
 
     @Override
-    public Token[] getParameters() {
-        if(position == null) {
-            return new Token[0];
-        } else {
-            return new Token[]{position};
-        }
+    public DataType[] getParameterTypes() {
+        return new DataType[]{
+                DataType.INT
+        };
     }
 
     @Override
     public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
-        if(position == null) throw new SyntaxError("Incomplete tree");
         bin.push(true);
         bin.push(true);
-        position.getBytecode(bin);
+        super.getBytecode(bin);
     }
 
     @Override
-    public DataType getNextParam() {
-        if(position == null){
-            return DataType.INT;
-        }else{
-            return DataType.VOID;
-        }
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        if(child instanceof I && position == null){
-            position = (I) child;
-        }else{
-            throw new SyntaxError("Invalid select index");
-        }
+    public DataType getDataType() {
+        return DataType.CHAR;
     }
 
     @Override

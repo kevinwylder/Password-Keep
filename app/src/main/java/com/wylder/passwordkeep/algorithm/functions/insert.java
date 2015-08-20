@@ -6,7 +6,6 @@ import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -15,64 +14,38 @@ import java.util.Stack;
  *
  * Action to insert a character into the password at a given index
  */
-public class insert implements A {
-
-    C character;
-    I position;
+public class insert extends A {
 
     @Override
-    public void perform(StringBuilder basePassword, String siteName) throws EvaluationError {
-        if(character == null || position == null) throw new EvaluationError("insert needs two parameters");
-        int pos = position.evaluate(siteName);
+    public void perform(StringBuilder basePassword, String siteName) throws EvaluationError, SyntaxError {
+        int pos = ((I) getParameter(DataType.INT, 0)).evaluate(siteName);
         if(siteName.length() == 0){
             pos = 0;
         }else{
             pos %= basePassword.length();
         }
-        basePassword.insert(pos, character.evaluate(siteName));
+        basePassword.insert(pos, ((C) getParameter(DataType.CHAR, 1)).evaluate(siteName));
     }
 
     @Override
-    public Token[] getParameters() {
-        if(character == null){
-            return new Token[0];
-        }else if(position == null){
-            return new Token[]{character};
-        }else{
-            return new Token[]{character, position};
-        }
+    public DataType[] getParameterTypes() {
+        return new DataType[]{
+                DataType.CHAR,
+                DataType.INT
+        };
     }
 
     @Override
-    public DataType getNextParam() {
-        if(character == null){
-            return DataType.CHAR;
-        }else if(position == null){
-            return DataType.INT;
-        }else{
-            return DataType.VOID;
-        }
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        if(child instanceof C){
-            character = (C) child;
-        }else if(child instanceof I){
-            position = (I) child;
-        }else{
-            throw new SyntaxError("incorrect parameter ([" + child.toString() + "])");
-        }
+    public DataType getDataType() {
+        return DataType.ACTION;
     }
 
 
     @Override
     public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
-        if(position == null || character == null) throw new SyntaxError("Incomplete tree");
         bin.push(true);
         bin.push(false);
-        character.getBytecode(bin);
-        position.getBytecode(bin);
+        super.getBytecode(bin);
     }
 
     @Override
@@ -80,9 +53,5 @@ public class insert implements A {
         return "insert";
     }
 
-    @Override
-    public String toString(){
-        return "";
-    }
 
 }

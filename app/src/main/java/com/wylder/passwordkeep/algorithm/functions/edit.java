@@ -6,7 +6,6 @@ import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -17,51 +16,27 @@ import java.util.Stack;
  * of the first parameter. If the second parameter is longer than the password, it will modulate it
  * by the length of the string.
  */
-public class edit implements A {
-
-    C character;
-    I position;
+public class edit extends A {
 
     @Override
-    public void perform(StringBuilder basePassword, String siteName) throws EvaluationError {
-        if(character == null || position == null) throw new EvaluationError("Incomplete edit action");
+    public void perform(StringBuilder basePassword, String siteName) throws EvaluationError, SyntaxError {
         if(siteName.length() == 0) throw new EvaluationError("Cannot edit an empty site name");
-        char edit = character.evaluate(siteName);
-        int pos = position.evaluate(siteName) % basePassword.length();
+        char edit = ((C) getParameter(DataType.CHAR, 0)).evaluate(siteName);
+        int pos = ((I) getParameter(DataType.INT, 1)).evaluate(siteName) % basePassword.length();
         basePassword.replace(pos, pos + 1, "" + edit);
     }
 
     @Override
-    public Token[] getParameters() {
-        if(character == null){
-            return new Token[0];
-        }else if(position == null){
-            return new Token[]{character};
-        }else {
-            return new Token[]{character, position};
-        }
+    public DataType[] getParameterTypes() {
+        return new DataType[]{
+                DataType.CHAR,
+                DataType.INT
+        };
     }
 
     @Override
-    public DataType getNextParam() {
-        if(character == null) {
-            return DataType.CHAR;
-        } else if(position == null) {
-            return DataType.INT;
-        } else {
-            return DataType.VOID;
-        }
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        if(child instanceof C && character == null && position == null) {
-            character = (C) child;
-        }else if(child instanceof I && character != null && position == null){
-            position = (I) child;
-        }else{
-            throw new SyntaxError("invalid parameter ([" + child.toString() + "]) for edit");
-        }
+    public DataType getDataType() {
+        return DataType.ACTION;
     }
 
     @Override
@@ -71,11 +46,9 @@ public class edit implements A {
 
     @Override
     public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
-        if(position == null || character == null) throw new SyntaxError("Incomplete tree");
         bin.push(false);
         bin.push(false);
-        character.getBytecode(bin);
-        position.getBytecode(bin);
+        super.getBytecode(bin);
     }
 
 }

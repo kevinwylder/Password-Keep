@@ -7,6 +7,6 @@ package com.wylder.passwordkeep.algorithm;
  */
 public abstract class C extends Token {
 
-    public abstract char evaluate(String siteName) throws EvaluationError;
+    public abstract char evaluate(String siteName) throws EvaluationError, SyntaxError;
 
 }

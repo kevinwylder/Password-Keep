@@ -5,7 +5,6 @@ import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -14,47 +13,31 @@ import java.util.Stack;
  *
  * returns the lowercase character corresponding to it's position in the alphabet.
  */
-public class letter implements C {
-
-    I letter;
+public class letter extends C {
 
     @Override
-    public char evaluate(String siteName) throws EvaluationError {
-        if(letter == null) throw new EvaluationError("Algorithm incomplete");
-        int number = letter.evaluate(siteName) % 26;
+    public char evaluate(String siteName) throws EvaluationError, SyntaxError {
+        int number = ((I) getParameter(DataType.INT, 0)).evaluate(siteName) % 26;
         return (char) (number + 97);
     }
 
     @Override
-    public Token[] getParameters() {
-        if(letter == null) return new Token[0];
-        else return new Token[]{letter};
+    public DataType[] getParameterTypes() {
+        return new DataType[]{
+                DataType.INT
+        };
     }
 
     @Override
-    public DataType getNextParam() {
-        if(letter == null){
-            return DataType.INT;
-        }else{
-            return DataType.VOID;
-        }
+    public DataType getDataType() {
+        return DataType.CHAR;
     }
 
     @Override
     public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
-        if(letter == null) throw new SyntaxError("Incomplete tree");
         bin.push(false);
         bin.push(true);
-        letter.getBytecode(bin);
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        if(child instanceof I && letter == null){
-            letter = (I) child;
-        }else {
-            throw new SyntaxError("asking for a non-number alphabet position");
-        }
+        super.getBytecode(bin);
     }
 
     @Override

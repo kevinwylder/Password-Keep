@@ -5,7 +5,6 @@ import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -14,16 +13,12 @@ import java.util.Stack;
  *
  * matching case character rotated through the alphabet by the provided amount.
  */
-public class rotate implements C {
-
-    C startChar = null;
-    I rotation = null;
+public class rotate extends C {
 
     @Override
-    public char evaluate(String siteName) throws EvaluationError {
-        if(startChar == null || rotation == null) throw new EvaluationError("incomplete algorithm.");
-        int value = startChar.evaluate(siteName);
-        int amount = rotation.evaluate(siteName);
+    public char evaluate(String siteName) throws EvaluationError, SyntaxError {
+        int value = ((C) getParameter(DataType.CHAR, 0)).evaluate(siteName);
+        int amount = ((I) getParameter(DataType.INT, 1)).evaluate(siteName);
         int offset;
         if(value > 64 && value < 91){
             offset = 65; // capitals
@@ -34,50 +29,28 @@ public class rotate implements C {
         }
         value = (value + amount - offset) % 26;
         if(value < 0) value += 26;
-        return (char) (value + 65);
+        return (char) (value + offset);
     }
 
     @Override
-    public Token[] getParameters() {
-        if(startChar == null){
-            return new Token[0];
-        }else if (rotation == null){
-            return new Token[]{startChar};
-        }else {
-            return new Token[]{startChar, rotation};
-        }
+    public DataType[] getParameterTypes() {
+        return new DataType[]{
+                DataType.CHAR,
+                DataType.INT
+        };
     }
 
     @Override
-    public DataType getNextParam() {
-        if(startChar == null){
-            return DataType.CHAR;
-        }else if(rotation == null){
-            return DataType.INT;
-        }else {
-            return DataType.VOID;
-        }
+    public DataType getDataType() {
+        return DataType.CHAR;
     }
 
 
     @Override
     public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
-        if(startChar == null || rotation == null) throw new SyntaxError("Incomplete tree");
         bin.push(true);
         bin.push(false);
-        startChar.getBytecode(bin);
-        rotation.getBytecode(bin);
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        if(child instanceof C && startChar == null && rotation == null){
-            startChar = (C) child;
-        }else if(child instanceof I && startChar != null && rotation == null){
-            rotation = (I) child;
-        }else {
-            throw new SyntaxError("Invalid rotation parameters");
-        }
+        super.getBytecode(bin);
     }
 
     @Override

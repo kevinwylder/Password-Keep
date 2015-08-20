@@ -119,7 +119,7 @@ public class AlgorithmFactory {
             // we'll parse until the action closes
             while(!tokenStack.empty()){
                 Token token = tokenStack.peek();
-                DataType dataType = token.getNextParam();
+                DataType dataType = token.getNextParameterType();
                 if(dataType != DataType.VOID) {
                     // this token is looking for a child
                     Token child = readToken(dataType);

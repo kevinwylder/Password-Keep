@@ -5,7 +5,6 @@ import com.wylder.passwordkeep.algorithm.C;
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -14,41 +13,28 @@ import java.util.Stack;
  *
  * Action that adds its only parameter (a C token) to the end of the currently constructed password
  */
-public class add implements A {
-
-    C parameter = null;
+public class add extends A {
 
     /**
      * adds the evaluated parameter to the end of the password
-     * @return the new password, ready for more actions
      * @throws EvaluationError if the char cannot be evaluated
      */
     @Override
-    public void perform(StringBuilder basePassword, String siteName) throws EvaluationError {
+    public void perform(StringBuilder basePassword, String siteName) throws EvaluationError, SyntaxError {
+        C parameter = (C) getParameter(DataType.CHAR, 0);
         basePassword.append(parameter.evaluate(siteName));
     }
 
     @Override
-    public Token[] getParameters() {
-        return new Token[]{parameter};
+    public DataType[] getParameterTypes() {
+        return new DataType[]{
+                DataType.CHAR
+        };
     }
 
     @Override
-    public DataType getNextParam() {
-        if(parameter == null){
-            return DataType.CHAR;
-        }else{
-            return DataType.VOID;
-        }
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError{
-        if(child instanceof C){
-            parameter = (C) child;
-        }else {
-            throw new SyntaxError("error giving add token child parameter");
-        }
+    public DataType getDataType() {
+        return DataType.ACTION;
     }
 
     @Override
@@ -58,15 +44,9 @@ public class add implements A {
 
     @Override
     public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
-        if(parameter == null) throw new SyntaxError("Incomplete tree");
         bin.push(true);
         bin.push(true);
-        parameter.getBytecode(bin);
-    }
-
-    @Override
-    public String toString() {
-        return "add [" + parameter.toString() + "] to the end of the password";
+        super.getBytecode(bin);
     }
 
 

@@ -4,7 +4,6 @@ import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -13,8 +12,14 @@ import java.util.Stack;
  *
  * the sum of each chararcter in the siteName's eval
  */
-public class sum implements I {
+public class sum extends I {
 
+    /**
+     * helper method to evaluate each char of the string
+     * @param character the character selected
+     * @return the integer position of that char in the alphabet
+     * @throws EvaluationError the char isn't in a-z or A-Z
+     */
     private int eval(char character) throws EvaluationError{
         int number = (int) character;
         if(number > 64 && number < 91){
@@ -36,18 +41,13 @@ public class sum implements I {
     }
 
     @Override
-    public Token[] getParameters() {
-        return new Token[0];
+    public DataType[] getParameterTypes() {
+        return new DataType[0];
     }
 
     @Override
-    public DataType getNextParam() {
-        return DataType.VOID;
-    }
-
-    @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        throw new SyntaxError("Sum doesn't take parameters");
+    public DataType getDataType() {
+        return DataType.INT;
     }
 
     @Override

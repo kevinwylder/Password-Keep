@@ -4,7 +4,6 @@ import com.wylder.passwordkeep.algorithm.C;
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.algorithm.Token;
 
 import java.util.Stack;
 
@@ -13,46 +12,31 @@ import java.util.Stack;
  *
  * A character that is the capitalized version of its parameter
  */
-public class capitalize implements C {
-
-    C parameter = null;
+public class capitalize extends C {
 
     @Override
-    public char evaluate(String siteName) throws EvaluationError {
-        if(parameter == null) throw new EvaluationError("Incomplete Algorithm, capitalizing nothing");
-        return Character.toUpperCase(parameter.evaluate(siteName));
+    public char evaluate(String siteName) throws EvaluationError, SyntaxError {
+        C character = (C) getParameter(DataType.CHAR, 0);
+        return Character.toUpperCase(character.evaluate(siteName));
     }
 
     @Override
-    public Token[] getParameters() {
-        if (parameter == null) return new Token[0];
-        else return new Token[]{parameter};
-    }
-
-    @Override
-    public DataType getNextParam() {
-        if(parameter == null){
-            return DataType.CHAR;
-        }else{
-            return DataType.VOID;
-        }
+    public DataType[] getParameterTypes() {
+        return new DataType[]{
+                DataType.CHAR
+        };
     }
 
     @Override
     public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
-        if(parameter == null) throw new SyntaxError("Incomplete tree");
         bin.push(false);
         bin.push(false);
-        parameter.getBytecode(bin);
+        super.getBytecode(bin);
     }
 
     @Override
-    public void giveParameter(Token child) throws SyntaxError {
-        if(child instanceof C){
-            parameter = (C) child;
-        }else{
-            throw new SyntaxError("Incorrect parameter type for capitalize");
-        }
+    public DataType getDataType() {
+        return DataType.CHAR;
     }
 
     @Override
@@ -60,8 +44,4 @@ public class capitalize implements C {
         return "capitalize";
     }
 
-    @Override
-    public String toString(){
-        return "the letter [" + parameter.toString() + "] capitalized";
-    }
 }

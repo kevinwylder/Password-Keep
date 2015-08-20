@@ -6,33 +6,32 @@ import java.util.Stack;
 /**
  * Created by kevin on 8/12/15.
  *
- * An interface that describes a function token. All two bit operaters have a corresponding token
+ * An class that describes a function token. All two bit operaters have a corresponding token
  */
 public abstract class Token {
 
     private int nextParamIndex = 0;
-    protected DataType[] parameters;
-    protected ArrayList<Token> children = new ArrayList<>();
-
-    protected Token(){
-        parameters = getParameters();
-    }
+    private ArrayList<Token> parameters = new ArrayList<>();
 
     /**
-     * Return any subtoken parameters.
-     * @return 0, 1, or 2 tokens passed in as parameters to this token
+     * method to get a parameter and ensure it will be the correct type
+     * @param type the type of token to return
+     * @param position the index of the token to retrieve
+     * @return the token ready to be type casted (A, C, or I)
      */
-    public abstract DataType[] getParameters();
-
-    /**
-     * Gets the datatype of the next parameter.
-     * @return the DataType enum representing the bitcode type (A, I, o
-     */
-    public DataType getNextParam() {
-        if(nextParamIndex >= parameters.length){
-            return DataType.VOID;
+    protected Token getParameter(DataType type, int position) throws SyntaxError {
+        // check for proper size
+        if(position >= parameters.size()){
+            throw new SyntaxError("Not enough parameters in " + getOperatorName());
+        }
+        Token parameter = parameters.get(position);
+        // check for proper type
+        if(     type == DataType.ACTION && parameter instanceof A ||
+                type == DataType.CHAR   && parameter instanceof C ||
+                type == DataType.INT    && parameter instanceof I ){
+            return parameter;
         } else {
-            return parameters[nextParamIndex];
+            throw new SyntaxError("parameter " + position + " of " + getOperatorName() + " not proper type");
         }
     }
 
@@ -41,24 +40,36 @@ public abstract class Token {
      * @param child the token parameter to add
      */
     public void giveParameter(Token child) throws SyntaxError {
-        if(nextParamIndex >= parameters.length){
+        if(nextParamIndex >= getParameterTypes().length){
             throw new SyntaxError("too many parameters for " + getOperatorName());
         }
-        if(child.getDatatype() == parameters[nextParamIndex]){
-            children.add(child);
+        if(child.getDataType() == getParameterTypes()[nextParamIndex]){
+            parameters.add(child);
             nextParamIndex++;
         } else {
             throw new SyntaxError("incorrect parameter type for " + getOperatorName());
         }
     }
 
-    public abstract DataType getDatatype();
+    /**
+     * Return any subtoken parameters.
+     * @return 0, 1, or 2 tokens passed in as parameters to this token
+     */
+    public abstract DataType[] getParameterTypes();
 
     /**
-     * create a human readable string of the algorithm description
-     * @return a constructed string explanation
+     * Gets the datatype of the next parameter.
+     * @return the DataType enum representing the bitcode type (A, I, o
      */
-    public abstract String toString();
+    public DataType getNextParameterType() {
+        if(nextParamIndex >= getParameterTypes().length){
+            return DataType.VOID;
+        } else {
+            return getParameterTypes()[nextParamIndex];
+        }
+    }
+
+    public abstract DataType getDataType();
 
     /**
      * @return a string that describes the operation
@@ -70,6 +81,13 @@ public abstract class Token {
      * @param bin the location to write the data
      * @throws SyntaxError if the tree is incomplete
      */
-    public abstract void getBytecode(Stack<Boolean> bin) throws SyntaxError;
+    public void getBytecode(Stack<Boolean> bin) throws SyntaxError {
+        if(parameters.size() != getParameterTypes().length){
+            throw new SyntaxError("Incomplete tree at " + getOperatorName());
+        }
+        for(Token child : parameters){
+            child.getBytecode(bin);
+        }
+    }
 
 }
