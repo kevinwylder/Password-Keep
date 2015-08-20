@@ -19,7 +19,7 @@ public class Algorithm {
      * @return a password string
      * @throws EvaluationError when the
      */
-    public String generatePassword(String basePassword, String siteName) throws EvaluationError {
+    public String generatePassword(String basePassword, String siteName) throws EvaluationError, SyntaxError {
         StringBuilder builder = new StringBuilder(basePassword);
         for(A action : actions){
             action.perform(builder, siteName);

@@ -22,7 +22,7 @@ public class BuildAlgorithmFragment extends Fragment {
     EditText testSite;
     TextView evalOutput;
     TextView syntaxOutput;
-    Button submit
+    Button submit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle sis) {

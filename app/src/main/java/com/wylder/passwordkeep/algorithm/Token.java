@@ -26,12 +26,10 @@ public abstract class Token {
         }
         Token parameter = parameters.get(position);
         // check for proper type
-        if(     type == DataType.ACTION && parameter instanceof A ||
-                type == DataType.CHAR   && parameter instanceof C ||
-                type == DataType.INT    && parameter instanceof I ){
+        if(type == parameter.getDataType()){
             return parameter;
         } else {
-            throw new SyntaxError("parameter " + position + " of " + getOperatorName() + " not proper type");
+            throw new SyntaxError("parameter " + position + " of " + getOperatorName() + " not proper type. expected " + type + " but returned " + parameter.getDataType() );
         }
     }
 

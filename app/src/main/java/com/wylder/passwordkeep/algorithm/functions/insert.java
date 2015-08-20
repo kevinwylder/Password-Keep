@@ -18,13 +18,13 @@ public class insert extends A {
 
     @Override
     public void perform(StringBuilder basePassword, String siteName) throws EvaluationError, SyntaxError {
-        int pos = ((I) getParameter(DataType.INT, 0)).evaluate(siteName);
+        int pos = ((I) getParameter(DataType.INT, 1)).evaluate(siteName);
         if(siteName.length() == 0){
             pos = 0;
         }else{
             pos %= basePassword.length();
         }
-        basePassword.insert(pos, ((C) getParameter(DataType.CHAR, 1)).evaluate(siteName));
+        basePassword.insert(pos, ((C) getParameter(DataType.CHAR, 0)).evaluate(siteName));
     }
 
     @Override
