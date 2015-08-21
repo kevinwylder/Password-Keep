@@ -55,37 +55,6 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
         actions.add(new TokenBox(DataType.ACTION));
         actions.get(0).setToken(new insert());
         actions.add(new TokenBox(DataType.ACTION));
-        setRowsAndColumns();
-    }
-
-    /**
-     * method to set each box's row to the proper position so there are no overlaps or gaps
-     * it also sets the total number of rows and columns to the proper size
-     */
-    private void setRowsAndColumns(){
-        int cumulative = 0;
-        int maxCol = 0;
-        for (int i = 0; i < actions.size(); i++) {
-            TokenBox actionBox = actions.get(i);
-            actionBox.setRow(cumulative);
-            int depth = actionBox.setColumn(0);
-            if(depth > maxCol) maxCol = depth;
-            cumulative += actionBox.rowSpan();
-        }
-        rows = cumulative;
-        columns = maxCol;
-    }
-
-    /**
-     * Method to draw each box and line on the screen
-     */
-    private void drawCanvas(){
-        Canvas canvas = holder.lockCanvas();
-        canvas.drawColor(Color.WHITE);
-        for(TokenBox box : actions){
-            box.drawSelf(canvas, this);
-        }
-        holder.unlockCanvasAndPost(canvas);
     }
 
     /**
@@ -104,6 +73,57 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
             }
         }
         return algorithm;
+    }
+
+    /**
+     * Interface to be called when this AlgorithmView's tree changes
+     */
+    protected interface OnTreeChanged {
+        void onTreeChanged();
+    }
+
+    private OnTreeChanged treeChangedListener = null;
+
+    /**
+     * Method to set a listener that will be called in the event this tree changes
+     * @param listener
+     */
+    protected void setTreeChangedListener(OnTreeChanged listener){
+        treeChangedListener = listener;
+    }
+
+    /**
+     * Method that must be called when the tree changes. It does 3 things<br/>
+     * 1. sets the rows and columns of each box in the tree and the whole view<br/>
+     * 2. draws the tree to the screen<br/>
+     * 3. calls the OnTreeChanged listener if necessary
+     */
+    protected void treeChanged(){
+        // set rows and columns
+        int cumulative = 0;
+        int maxCol = 0;
+        for (int i = 0; i < actions.size(); i++) {
+            TokenBox actionBox = actions.get(i);
+            actionBox.setRow(cumulative);
+            int depth = actionBox.setColumn(0);
+            if(depth > maxCol) maxCol = depth;
+            cumulative += actionBox.rowSpan();
+        }
+        rows = cumulative;
+        columns = maxCol;
+
+        // draw to the screen
+        Canvas canvas = holder.lockCanvas();
+        canvas.drawColor(Color.WHITE);
+        for(TokenBox box : actions){
+            box.drawSelf(canvas, this);
+        }
+        holder.unlockCanvasAndPost(canvas);
+
+        // call the listener
+        if(treeChangedListener != null){
+            treeChangedListener.onTreeChanged();
+        }
     }
 
     private Point location = new Point();
@@ -147,14 +167,8 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
         if(clicked == null) return;
 
         // use separate class to handle this UI
-        TokenSelector selector = new TokenSelector(getContext(), clicked);
-        selector.setOnTokenSelected(new TokenSelector.OnTokenSelected() {
-            @Override
-            public void onSelect() {
-                setRowsAndColumns();
-                drawCanvas();
-            }
-        });
+        TokenSelector selector = new TokenSelector(getContext(), clicked, this);
+
     }
 
     @Override
@@ -166,7 +180,7 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
     public void surfaceChanged(SurfaceHolder surfaceHolder, int pixelFormat, int width, int height) {
         this.width = width;
         this.height = height;
-        drawCanvas();
+        treeChanged();
     }
 
     @Override

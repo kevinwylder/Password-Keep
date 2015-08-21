@@ -94,7 +94,7 @@ public class TokenBox  {
         }else{
             text = "Add Number";
         }
-        children = new ArrayList<>();
+        children.clear();
     }
 
     /**

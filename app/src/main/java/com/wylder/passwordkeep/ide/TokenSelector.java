@@ -29,15 +29,9 @@ import com.wylder.passwordkeep.algorithm.functions.sum;
  */
 public class TokenSelector {
 
-    interface OnTokenSelected {
-        void onSelect();
-    }
-
-    private OnTokenSelected callback;
-
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
-        public void onClick(View view) {
+        public void onClick(View v) {
             int selected = 0;
             switch(view.getId()){
                 case R.id.button1:
@@ -56,17 +50,19 @@ public class TokenSelector {
                     box.deleteSelf();
             }
             box.setToken(functions[selected]);
-            callback.onSelect();
             dialog.dismiss();
+            view.treeChanged();
         }
     };
 
+    private AlgorithmView view;
     private TokenBox box;
     private AlertDialog dialog;
     private Token[] functions;
 
-    public TokenSelector(Context ctx, TokenBox box){
+    public TokenSelector(Context ctx, TokenBox box, AlgorithmView view){
         this.box = box;
+        this.view = view;
         // define the functions to choose
         if(box.type == DataType.ACTION) {
             functions = new Token[]{
@@ -119,10 +115,6 @@ public class TokenSelector {
         builder.setView(root);
         dialog = builder.create();
         dialog.show();
-    }
-
-    public void setOnTokenSelected(OnTokenSelected callback){
-        this.callback = callback;
     }
 
 }
