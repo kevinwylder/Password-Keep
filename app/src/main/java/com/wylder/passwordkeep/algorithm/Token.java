@@ -10,7 +10,6 @@ import java.util.Stack;
  */
 public abstract class Token {
 
-    private int nextParamIndex = 0;
     private ArrayList<Token> parameters = new ArrayList<>();
 
     /**
@@ -38,12 +37,11 @@ public abstract class Token {
      * @param child the token parameter to add
      */
     public void giveParameter(Token child) throws SyntaxError {
-        if(nextParamIndex >= getParameterTypes().length){
+        if(parameters.size() >= getParameterTypes().length){
             throw new SyntaxError("too many parameters for " + getOperatorName());
         }
-        if(child.getDataType() == getParameterTypes()[nextParamIndex]){
+        if(child.getDataType() == getParameterTypes()[parameters.size()]){
             parameters.add(child);
-            nextParamIndex++;
         } else {
             throw new SyntaxError("incorrect parameter type for " + getOperatorName());
         }
@@ -60,10 +58,10 @@ public abstract class Token {
      * @return the DataType enum representing the bitcode type (A, I, o
      */
     public DataType getNextParameterType() {
-        if(nextParamIndex >= getParameterTypes().length){
+        if(parameters.size() >= getParameterTypes().length){
             return DataType.VOID;
         } else {
-            return getParameterTypes()[nextParamIndex];
+            return getParameterTypes()[parameters.size()];
         }
     }
 
