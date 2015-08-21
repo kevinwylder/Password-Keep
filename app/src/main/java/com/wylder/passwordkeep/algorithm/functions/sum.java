@@ -27,7 +27,7 @@ public class sum extends I {
         } else if(number > 96 && number < 123){
             return number - 96;     // lowercase
         } else {
-            throw new EvaluationError("sum could not evaluate char(s) in siteName");
+            throw new EvaluationError("sum could not evaluate char(s) " + character + " in siteName");
         }
     }
 

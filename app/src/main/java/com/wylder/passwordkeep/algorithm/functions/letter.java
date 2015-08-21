@@ -11,17 +11,17 @@ import java.util.Stack;
 /**
  * Created by kevin on 8/12/15.
  *
- * returns the lowercase character corresponding to the int parameter's position in the alphabet.
+ * returns the one's digit character of the integer.
  */
 public class letter extends C {
 
     @Override
     public char evaluate(String siteName) throws EvaluationError, SyntaxError {
-        int number = ((I) getParameter(DataType.INT, 0)).evaluate(siteName) % 26;
+        int number = ((I) getParameter(DataType.INT, 0)).evaluate(siteName) % 10;
         if(number < 0){
-            number += 26;
+            number += 10;
         }
-        return (char) (number + 97);
+        return (char) (48 + number);
     }
 
     @Override
