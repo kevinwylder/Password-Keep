@@ -17,9 +17,10 @@ public class select extends C {
 
     @Override
     public char evaluate(String siteName) throws EvaluationError, SyntaxError {
-        int position = ((I) getParameter(DataType.INT, 0)).evaluate(siteName);
-        position %= siteName.length();
-        if(position < 0) position += siteName.length();
+        int position = ((I) getParameter(DataType.INT, 0)).evaluate(siteName) % siteName.length();
+        if(position < 0) {
+            position += siteName.length();
+        }
         return siteName.charAt(position);
     }
 

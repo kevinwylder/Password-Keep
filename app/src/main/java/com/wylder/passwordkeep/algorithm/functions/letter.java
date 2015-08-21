@@ -11,13 +11,16 @@ import java.util.Stack;
 /**
  * Created by kevin on 8/12/15.
  *
- * returns the lowercase character corresponding to it's position in the alphabet.
+ * returns the lowercase character corresponding to the int parameter's position in the alphabet.
  */
 public class letter extends C {
 
     @Override
     public char evaluate(String siteName) throws EvaluationError, SyntaxError {
         int number = ((I) getParameter(DataType.INT, 0)).evaluate(siteName) % 26;
+        if(number < 0){
+            number += 26;
+        }
         return (char) (number + 97);
     }
 

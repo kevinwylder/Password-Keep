@@ -78,6 +78,7 @@ public class TokenBox  {
         if(token == null){
             throw new SyntaxError("Incomplete tree");
         }
+        token.removeAllParameters();
         for(TokenBox child : children){
             token.giveParameter(child.getToken());
         }
@@ -96,6 +97,7 @@ public class TokenBox  {
             text = "Add Number";
         }
         children.clear();
+        token = null;
     }
 
     /**

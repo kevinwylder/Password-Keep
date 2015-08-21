@@ -20,6 +20,9 @@ public class Algorithm {
      * @throws EvaluationError when the
      */
     public String generatePassword(String basePassword, String siteName) throws EvaluationError, SyntaxError {
+        if(siteName.length() == 0){
+            throw new EvaluationError("Cannot have empty site name");
+        }
         StringBuilder builder = new StringBuilder(basePassword);
         for(A action : actions){
             action.perform(builder, siteName);

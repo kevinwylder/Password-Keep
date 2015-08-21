@@ -20,9 +20,11 @@ public class edit extends A {
 
     @Override
     public void perform(StringBuilder basePassword, String siteName) throws EvaluationError, SyntaxError {
-        if(siteName.length() == 0) throw new EvaluationError("Cannot edit an empty site name");
         char edit = ((C) getParameter(DataType.CHAR, 0)).evaluate(siteName);
         int pos = ((I) getParameter(DataType.INT, 1)).evaluate(siteName) % basePassword.length();
+        if (pos < 0){
+            pos += basePassword.length();
+        }
         basePassword.replace(pos, pos + 1, "" + edit);
     }
 
