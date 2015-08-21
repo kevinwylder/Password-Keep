@@ -2,9 +2,11 @@ package com.wylder.passwordkeep.ide;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 
 import com.wylder.passwordkeep.R;
 import com.wylder.passwordkeep.algorithm.DataType;
@@ -53,10 +55,15 @@ public class TokenSelector {
             if(selected == -1){
                 box.deleteSelf();
             } else {
-                box.setToken(functions[selected]);
+                Token token = functions[selected];
+                if(token instanceof constant) {
+                    showConstantSelector((constant) token, box);
+                } else {
+                    box.setToken(functions[selected]);
+                    view.treeChanged();
+                }
             }
             dialog.dismiss();
-            view.treeChanged();
         }
     };
 
@@ -126,6 +133,33 @@ public class TokenSelector {
      */
     public void showDialog(){
         dialog.show();
+    }
+
+    private void showConstantSelector(final constant token, final TokenBox box){
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialog.getContext());
+        builder.setTitle("Select constant value");
+        // create a number picker for -31 to 31
+        final NumberPicker numberPicker = new NumberPicker(dialog.getContext());
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(62);
+        numberPicker.setWrapSelectorWheel(false);
+        numberPicker.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int index) {
+                return Integer.toString(31 - index);
+            }
+        });
+        builder.setView(numberPicker);
+        builder.setCancelable(false);
+        builder.setPositiveButton("Select", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                token.setValue(31 - numberPicker.getValue());
+                box.setToken(token);
+                view.treeChanged();
+            }
+        });
+        builder.create().show();
     }
 
 }
