@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.wylder.passwordkeep.algorithm.Algorithm;
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
+import com.wylder.passwordkeep.security.DatabaseOperator;
 
 /**
  * Created by kevin on 8/17/15.
@@ -25,6 +27,8 @@ import com.wylder.passwordkeep.algorithm.SyntaxError;
  * A fragment to show a UI to create an algorithm
  */
 public class BuildAlgorithmActivity extends Activity {
+
+    DatabaseOperator databaseOperator;
 
     AlgorithmView algorithmView;
     EditText name;
@@ -38,6 +42,7 @@ public class BuildAlgorithmActivity extends Activity {
     public void onCreate(Bundle sis) {
         super.onCreate(sis);
         setContentView(R.layout.build_algorithm);
+        databaseOperator = new DatabaseOperator(this);
 
         // setup actionbar
         ActionBar actionBar = getActionBar();
@@ -96,9 +101,16 @@ public class BuildAlgorithmActivity extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(name.getText().length() == 0){
+                    name.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(name, InputMethodManager.SHOW_IMPLICIT);
+                    return;
+                }
                 try {
                     String hexCode = algorithmView.getAlgorithm().getHex();
-                    // TODO: add this string to DatabaseHelper
+                    String algName = name.getText().toString();
+                    databaseOperator.addAlgorithm(algName, hexCode);
                     finish();
                 } catch (SyntaxError error) {
                     syntaxOutput.setText(error.getMessage());
