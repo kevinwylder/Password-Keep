@@ -98,7 +98,7 @@ public class BuildAlgorithmActivity extends Activity {
             public void onClick(View view) {
                 try {
                     String hexCode = algorithmView.getAlgorithm().getHex();
-                    // TODO: add this string to StorageDatabase
+                    // TODO: add this string to DatabaseHelper
                     finish();
                 } catch (SyntaxError error) {
                     syntaxOutput.setText(error.getMessage());
