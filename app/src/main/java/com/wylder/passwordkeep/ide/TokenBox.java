@@ -24,7 +24,7 @@ public class TokenBox  {
 
     DataType type;
     Token token;
-    ArrayList<TokenBox> children;
+    ArrayList<TokenBox> children = new ArrayList<>();
 
     String text;
     Paint boxPaint = new Paint();
@@ -64,6 +64,7 @@ public class TokenBox  {
             text += " " + ((constant) token).evaluate("");
         }
         DataType[] parameterTypes = token.getParameterTypes();
+        children.clear();
         for(DataType child : parameterTypes){
             children.add(new TokenBox(child));
         }

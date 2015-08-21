@@ -32,8 +32,8 @@ public class TokenSelector {
     private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int selected = 0;
-            switch(view.getId()){
+            int selected = 10;
+            switch(v.getId()){
                 case R.id.button1:
                     selected = 0;
                     break;
@@ -46,10 +46,15 @@ public class TokenSelector {
                 case R.id.button4:
                     selected = 3;
                     break;
-                default:
-                    box.deleteSelf();
+                case R.id.button5:
+                    selected = -1;
+                    break;
             }
-            box.setToken(functions[selected]);
+            if(selected == -1){
+                box.deleteSelf();
+            } else {
+                box.setToken(functions[selected]);
+            }
             dialog.dismiss();
             view.treeChanged();
         }
@@ -114,6 +119,12 @@ public class TokenSelector {
         builder.setTitle("Select Function");
         builder.setView(root);
         dialog = builder.create();
+    }
+
+    /**
+     * method to show the created dialog
+     */
+    public void showDialog(){
         dialog.show();
     }
 

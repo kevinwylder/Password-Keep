@@ -16,7 +16,6 @@ import com.wylder.passwordkeep.algorithm.Algorithm;
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
-import com.wylder.passwordkeep.algorithm.functions.insert;
 
 import java.util.ArrayList;
 
@@ -52,8 +51,6 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
         ONE_DIP = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
         padding = ONE_DIP * 7;
 
-        actions.add(new TokenBox(DataType.ACTION));
-        actions.get(0).setToken(new insert());
         actions.add(new TokenBox(DataType.ACTION));
     }
 
@@ -96,7 +93,7 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
      * Method that must be called when the tree changes. It does 3 things<br/>
      * 1. sets the rows and columns of each box in the tree and the whole view<br/>
      * 2. draws the tree to the screen<br/>
-     * 3. calls the OnTreeChanged listener if necessary
+     * 3. calls the OnTreeChanged listener if necessaryT
      */
     protected void treeChanged(){
         // set rows and columns
@@ -168,7 +165,7 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
 
         // use separate class to handle this UI
         TokenSelector selector = new TokenSelector(getContext(), clicked, this);
-
+        selector.showDialog();
     }
 
     @Override
