@@ -1,4 +1,4 @@
-package com.wylder.passwordkeep.security;
+package com.wylder.passwordkeep.storage;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

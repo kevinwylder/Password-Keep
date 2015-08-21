@@ -1,4 +1,4 @@
-package com.wylder.passwordkeep.security;
+package com.wylder.passwordkeep.storage;
 
 import android.provider.BaseColumns;
 

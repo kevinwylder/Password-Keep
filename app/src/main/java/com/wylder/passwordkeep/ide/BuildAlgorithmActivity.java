@@ -19,7 +19,7 @@ import com.wylder.passwordkeep.algorithm.Algorithm;
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
-import com.wylder.passwordkeep.security.DatabaseOperator;
+import com.wylder.passwordkeep.storage.DatabaseOperator;
 
 /**
  * Created by kevin on 8/17/15.

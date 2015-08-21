@@ -1,4 +1,4 @@
-package com.wylder.passwordkeep;
+package com.wylder.passwordkeep.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,8 +6,7 @@ import android.os.Bundle;
 /**
  * Created by kevin on 8/9/15.
  *
- * Activity to show a pager containing the History, Base Password, and Algorithm
- * Also the ability to search in the status bar
+ * Activity showing the website history and password evaluation user interface
  */
 public class MainActivity extends Activity{
 
