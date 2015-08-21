@@ -190,7 +190,10 @@ public class TokenBox  {
      * @return the tokenbox itself or null if it wasn't found
      */
     public TokenBox contains(int row, int column){
-        if(row == this.row && column == this.column) {
+        if(this.column > column || this.row > row){
+            return null;
+        }
+        if(column == this.column && row >= this.row && row < this.row + rowSpan()) {
             return this;
         }
         for(TokenBox child : children){

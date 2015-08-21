@@ -24,6 +24,9 @@ import com.wylder.passwordkeep.algorithm.functions.rotate;
 import com.wylder.passwordkeep.algorithm.functions.select;
 import com.wylder.passwordkeep.algorithm.functions.sum;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * Created by kevin on 8/19/15.
  *
@@ -53,7 +56,11 @@ public class TokenSelector {
                     break;
             }
             if(selected == -1){
-                box.deleteSelf();
+                if(box.type == DataType.ACTION){
+                    view.actions.remove(box);
+                } else {
+                    box.deleteSelf();
+                }
                 view.treeChanged();
             } else {
                 Token token = functions[selected];
@@ -143,6 +150,7 @@ public class TokenSelector {
         final NumberPicker numberPicker = new NumberPicker(dialog.getContext());
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(62);
+        numberPicker.setValue(31);
         numberPicker.setWrapSelectorWheel(false);
         numberPicker.setFormatter(new NumberPicker.Formatter() {
             @Override
@@ -150,6 +158,14 @@ public class TokenSelector {
                 return Integer.toString(31 - index);
             }
         });
+        // dirty dirty hacking found on stackoverflow
+        try {
+            Method method = numberPicker.getClass().getDeclaredMethod("changeValueByOne", boolean.class);
+            method.setAccessible(true);
+            method.invoke(numberPicker, true);
+        } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
         builder.setView(numberPicker);
         builder.setCancelable(false);
         builder.setPositiveButton("Select", new DialogInterface.OnClickListener() {

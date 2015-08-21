@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  *
  * A database that stores the history with optional usernames, and the BCrypt hash of the basepassword
  */
-public class StorageDatabase extends SQLiteOpenHelper{
+public class StorageDatabase extends SQLiteOpenHelper {
 
     public static final int version = 1;
     public static final String name = "database";

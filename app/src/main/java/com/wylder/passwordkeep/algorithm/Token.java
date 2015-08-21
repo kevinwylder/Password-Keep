@@ -1,7 +1,5 @@
 package com.wylder.passwordkeep.algorithm;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -40,15 +38,6 @@ public abstract class Token {
      */
     public void giveParameter(Token child) throws SyntaxError {
         if(parameters.size() >= getParameterTypes().length){
-            Log.e("KevinRuntime", "Syntax error trying to add " + child.getOperatorName() + " to " + getOperatorName());
-            Log.e("KevinRuntime", "number of parameters offered: " + parameters.size());
-            for (int i = 0; i < parameters.size(); i++) {
-                Log.e("KevinRuntime", "       " + parameters.get(i).getOperatorName());
-            }
-            Log.e("KevinRuntime", "number of parameters accepted: " + getParameterTypes().length);
-            for (int i = 0; i < getParameterTypes().length; i++) {
-                Log.e("KevinRuntime", "       " + getParameterTypes()[i]);
-            }
             throw new SyntaxError("too many parameters for " + getOperatorName());
         }
         if(child.getDataType() == getParameterTypes()[parameters.size()]){
