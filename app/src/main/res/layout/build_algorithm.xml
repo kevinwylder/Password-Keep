@@ -2,17 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="10dp"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-        android:hint="Algorithm Name" />
-
     <com.wylder.passwordkeep.ide.AlgorithmView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,19 +39,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText3"
-        android:layout_below="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
         android:layout_toStartOf="@+id/textView7"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        android:hint="Test Website Name" />
+        android:hint="Test Website Name"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView7"
-        android:layout_below="@+id/editText2"
         android:layout_alignBottom="@+id/editText3"
         android:gravity="center"
-        android:layout_alignEnd="@+id/editText2" />
+        android:layout_alignTop="@+id/editText3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp" />
 
 </RelativeLayout>

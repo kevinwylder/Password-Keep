@@ -1,9 +1,13 @@
 package com.wylder.passwordkeep.ide;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,8 +37,15 @@ public class BuildAlgorithmActivity extends Activity {
         super.onCreate(sis);
         setContentView(R.layout.build_algorithm);
 
+        // setup actionbar
+        ActionBar actionBar = getActionBar();
+        name = new EditText(this);
+        name.setHint("Algorithm Name");
+        actionBar.setCustomView(name);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        // find and setup views
         algorithmView = (AlgorithmView) findViewById(R.id.algorithmView);
-        name = (EditText) findViewById(R.id.editText2);
         testSite = (EditText) findViewById(R.id.editText3);
         evalOutput = (TextView) findViewById(R.id.textView7);
         syntaxOutput = (TextView) findViewById(R.id.textView9);
@@ -52,10 +63,8 @@ public class BuildAlgorithmActivity extends Activity {
                     Algorithm algorithm = algorithmView.getAlgorithm();
                     String output = algorithm.generatePassword("password", s.toString());
                     evalOutput.setText(output);
-                } catch (EvaluationError evaluationError) {
+                } catch (EvaluationError | SyntaxError evaluationError) {
                     evalOutput.setText(evaluationError.getMessage());
-                } catch (SyntaxError error) {
-                    evalOutput.setText(error.getMessage());
                 }
             }
         });
@@ -64,12 +73,19 @@ public class BuildAlgorithmActivity extends Activity {
         algorithmView.setTreeChangedListener(new AlgorithmView.OnTreeChanged() {
             @Override
             public void onTreeChanged() {
-                try{
+                try {
                     Algorithm algorithm = algorithmView.getAlgorithm();
                     syntaxOutput.setText("Hex code: " + algorithm.getHex());
+                    if (testSite.getText().length() > 0) {
+                        evalOutput.setText(algorithm.generatePassword("password", testSite.getText().toString()));
+                    }
                     submit.setEnabled(true);
                 } catch (SyntaxError error) {
                     syntaxOutput.setText(error.getMessage());
+                    evalOutput.setText("");
+                    submit.setEnabled(false);
+                } catch (EvaluationError error) {
+                    evalOutput.setText(error.getMessage());
                     submit.setEnabled(false);
                 }
             }
@@ -88,6 +104,26 @@ public class BuildAlgorithmActivity extends Activity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflate = getMenuInflater();
+        inflate.inflate(R.menu.ide, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_documenatation:
+                //
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
