@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 import com.wylder.passwordkeep.algorithm.Token;
+import com.wylder.passwordkeep.algorithm.functions.constant;
 
 import java.util.ArrayList;
 
@@ -18,8 +19,8 @@ import java.util.ArrayList;
  */
 public class TokenBox  {
 
-    int row;
-    int column;
+    private int row;
+    private int column;
 
     DataType type;
     Token token;
@@ -59,11 +60,17 @@ public class TokenBox  {
     public void setToken(Token token){
         this.token = token;
         this.text = token.getOperatorName();
-
+        if (token instanceof constant){
+            text += " " + ((constant) token).evaluate("");
+        }
+        DataType[] parameterTypes = token.getParameterTypes();
+        for(DataType child : parameterTypes){
+            children.add(new TokenBox(child));
+        }
     }
 
     /**
-     * method to construct it's token representation
+     * method to construct this box's token representation
      * @return the Token subtree of this box
      */
     public Token getToken() throws SyntaxError {
@@ -100,6 +107,7 @@ public class TokenBox  {
         float y = (row * view.height) / view.rows + view.padding;
         float width = (view.width) / view.columns - (2 * view.padding);
         float height = (view.height * rowSpan()) / view.rows - (2 * view.padding);
+        // draw lines
         for(TokenBox child : children){
             float childX = (child.column * view.width) / view.columns + view.padding;
             float childY = (child.row * view.height) / view.rows + view.padding;
@@ -107,10 +115,18 @@ public class TokenBox  {
             // draw line from the center of this box to all its children
             canvas.drawLine(x + (width / 2.0f), y + (height / 2.0f), childX + (width / 2.0f), childY + (childHeight / 2.0f), linePaint);
         }
+        // draw box shape
         RectF box = new RectF(x, y, x + width, y + height);
-        canvas.drawRoundRect(box, width / 10.0f, height / 10.0f, boxPaint);
-        canvas.drawRoundRect(box, width / 10.0f, height / 10.0f, boxOutlinePaint);
-        canvas.drawText(text, x + view.padding, y + view.padding, textPaint);
+        float rounded = Math.min(width / 10.0f, height / 10.0f);
+        canvas.drawRoundRect(box, rounded, rounded, boxPaint);
+        canvas.drawRoundRect(box, rounded, rounded, boxOutlinePaint);
+        // draw text
+        textPaint.setTextSize(100);
+        float textRatio = (width - 2 * view.padding) / textPaint.measureText(text);
+        float textSize = Math.min(height - 2 * view.padding, 100 * textRatio);
+        textPaint.setTextSize(textSize);
+        canvas.drawText(text, x + view.padding, y + (height + textSize) / 2.0f, textPaint);
+        // draw children
         for(TokenBox child : children){
             child.drawSelf(canvas, view);
         }
@@ -133,8 +149,8 @@ public class TokenBox  {
     }
 
     /**
-     * method to set the row
-     * @param row
+     * method to set the row and its children's row
+     * @param row the row to set
      */
     public void setRow(int row){
         this.row = row;
@@ -144,6 +160,43 @@ public class TokenBox  {
             box.setRow(row + cumulative);
             cumulative += box.rowSpan();
         }
+    }
+
+    /**
+     * method to set this box's column and its children's column
+     * @param column the column to set this box to
+     * @return the max column assigned
+     */
+    public int setColumn(int column){
+        this.column = column;
+        if(children.size() == 0){
+            return column + 1;
+        }
+        int max = 0;
+        for(TokenBox child : children){
+            int depth = child.setColumn(column + 1);
+            if(depth > max) max = depth;
+        }
+        return max;
+    }
+
+    /**
+     * Find if this subtree contains a tokenbox with the given row and column
+     * @param row the row to find
+     * @param column the column to find
+     * @return the tokenbox itself or null if it wasn't found
+     */
+    public TokenBox contains(int row, int column){
+        if(row == this.row && column == this.column) {
+            return this;
+        }
+        for(TokenBox child : children){
+            TokenBox found = child.contains(row, column);
+            if(found != null){
+                return found;
+            }
+        }
+        return null;    // if none of the children had it, the point was probably blank
     }
 
 }
