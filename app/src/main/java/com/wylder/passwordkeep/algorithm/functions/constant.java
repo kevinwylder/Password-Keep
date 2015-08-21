@@ -1,7 +1,5 @@
 package com.wylder.passwordkeep.algorithm.functions;
 
-import android.util.Log;
-
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.I;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
@@ -19,7 +17,6 @@ public class constant extends I {
 
     public void setValue(int value){
         this.value = value;
-        Log.e("KevinRuntime", "constant set tp " + value);
     }
 
     @Override

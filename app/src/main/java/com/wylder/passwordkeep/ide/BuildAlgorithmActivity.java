@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.wylder.passwordkeep.R;
 import com.wylder.passwordkeep.algorithm.Algorithm;
+import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
 
@@ -31,6 +32,7 @@ public class BuildAlgorithmActivity extends Activity {
     TextView evalOutput;
     TextView syntaxOutput;
     Button submit;
+    Button addAction;
 
     @Override
     public void onCreate(Bundle sis) {
@@ -50,6 +52,7 @@ public class BuildAlgorithmActivity extends Activity {
         evalOutput = (TextView) findViewById(R.id.textView7);
         syntaxOutput = (TextView) findViewById(R.id.textView9);
         submit = (Button) findViewById(R.id.button2);
+        addAction = (Button) findViewById(R.id.button3);
 
         testSite.addTextChangedListener(new TextWatcher() {
 
@@ -68,7 +71,6 @@ public class BuildAlgorithmActivity extends Activity {
                 }
             }
         });
-
 
         algorithmView.setTreeChangedListener(new AlgorithmView.OnTreeChanged() {
             @Override
@@ -101,6 +103,14 @@ public class BuildAlgorithmActivity extends Activity {
                 } catch (SyntaxError error) {
                     syntaxOutput.setText(error.getMessage());
                 }
+            }
+        });
+
+        addAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                algorithmView.actions.add(new TokenBox(DataType.ACTION));
+                algorithmView.treeChanged();
             }
         });
 

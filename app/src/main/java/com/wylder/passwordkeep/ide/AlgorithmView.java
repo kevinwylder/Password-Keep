@@ -140,7 +140,7 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
                 location.set(row, column);
                 break;
             case MotionEvent.ACTION_UP:
-                if(row == location.x && column == location.y){
+                if(row == location.x && column == location.y) {
                     onTokenClick(row, column);
                 }
         }
@@ -156,12 +156,14 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
         TokenBox clicked = null;
         for(TokenBox action : actions){
             TokenBox test = action.contains(row, column);
-            if(test != null){
+            if(test != null) {
                 clicked = test;
                 break;
             }
         }
-        if(clicked == null) return;
+        if(clicked == null){
+            return;
+        }
 
         // use separate class to handle this UI
         TokenSelector selector = new TokenSelector(getContext(), clicked, this);
