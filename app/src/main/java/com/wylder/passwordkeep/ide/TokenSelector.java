@@ -54,6 +54,7 @@ public class TokenSelector {
             }
             if(selected == -1){
                 box.deleteSelf();
+                view.treeChanged();
             } else {
                 Token token = functions[selected];
                 if(token instanceof constant) {
