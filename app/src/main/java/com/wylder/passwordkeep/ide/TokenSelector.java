@@ -109,7 +109,7 @@ public class TokenSelector {
 
         // inflate the layout
         LayoutInflater layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View root = layoutInflater.inflate(R.layout.ide_select_function, null);
+        View root = layoutInflater.inflate(R.layout.algorithm_select_function, null);
 
         // find the views
         Button button1 = (Button) root.findViewById(R.id.button1);

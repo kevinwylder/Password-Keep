@@ -42,7 +42,7 @@ public class BuildAlgorithmActivity extends Activity {
     @Override
     public void onCreate(Bundle sis) {
         super.onCreate(sis);
-        setContentView(R.layout.build_algorithm);
+        setContentView(R.layout.algorithm_build);
         databaseOperator = new DatabaseOperator(this);
 
         // setup actionbar

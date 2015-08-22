@@ -38,7 +38,7 @@ public class SetupActivity extends FragmentActivity{
      * setup the activity to show a login prompt
      */
     private void initLogin(){
-        setContentView(R.layout.enter_password);
+        setContentView(R.layout.password_enter);
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
