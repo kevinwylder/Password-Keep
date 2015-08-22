@@ -2,8 +2,13 @@ package com.wylder.passwordkeep.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.wylder.passwordkeep.algorithm.Algorithm;
+import com.wylder.passwordkeep.algorithm.AlgorithmFactory;
+import com.wylder.passwordkeep.algorithm.SyntaxError;
 
 /**
  * Created by kevin on 8/21/15.
@@ -55,7 +60,43 @@ public class DatabaseOperator {
         row.put(DatabaseContract.Algorithms.COLUMN_NAME, name);
         row.put(DatabaseContract.Algorithms.COLUMN_HEX, hex);
         row.put(DatabaseContract.Algorithms.COLUMN_CREATED, 1);
+        row.put(DatabaseContract.Algorithms.COLUMN_SELECTED, 0);
         database.insert(DatabaseContract.Algorithms.TABLE_NAME, null, row);
+    }
+
+    /**
+     * get the algorithm marked as selected in the database
+     * @return the algorithm or null if none selected
+     */
+    public Algorithm getSelectedAlgorithm(){
+        if(database == null) {
+            Log.e("KevinRuntime", "Cannot get algorithm from database, database not ready");
+            return null;
+        }
+        Cursor cursor = database.query(
+                DatabaseContract.Algorithms.TABLE_NAME,                 // table name
+                new String[]{                                           // columns
+                        DatabaseContract.Algorithms.COLUMN_HEX
+                },
+                DatabaseContract.Algorithms.COLUMN_SELECTED + " = 1",   // what to match
+                null,                                                   // group by
+                null,                                                   // having
+                null,                                                   // order by
+                "1"                                                       // limit
+        );
+        if(cursor.getCount() == 0){
+            return null;
+        }
+        cursor.moveToFirst();
+        String hex = cursor.getString(0);
+        try{
+            AlgorithmFactory factory = new AlgorithmFactory();
+            Algorithm algorithm = factory.buildAlgorithm(hex);
+            return algorithm;
+        } catch (SyntaxError error) {
+            Log.e("KevinRuntime", "Syntax error on selected algorithm: " + error.getMessage());
+            return null;
+        }
     }
 
 }

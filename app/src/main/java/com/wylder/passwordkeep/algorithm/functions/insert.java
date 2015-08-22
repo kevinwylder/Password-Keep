@@ -51,5 +51,13 @@ public class insert extends A {
         return "insert";
     }
 
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError{
+        string.append("insert [");
+        getParameter(DataType.CHAR, 0).explainOperation(string);
+        string.append("] in position (");
+        getParameter(DataType.INT, 1).explainOperation(string);
+        string.append(")");
+    }
 
 }

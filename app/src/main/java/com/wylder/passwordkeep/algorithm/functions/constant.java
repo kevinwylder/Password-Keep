@@ -49,4 +49,9 @@ public class constant extends I {
         }
     }
 
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append(value);
+    }
+
 }

@@ -60,4 +60,10 @@ public class sum extends I {
         bin.push(true);
         bin.push(false);
     }
+
+
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("the sum of all evaluated letters in the site name");
+    }
 }

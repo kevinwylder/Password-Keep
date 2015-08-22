@@ -11,7 +11,7 @@ public final class DatabaseContract {
 
     public DatabaseContract(){}
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "PasswordKeep.db";
 
     /**
@@ -23,6 +23,7 @@ public final class DatabaseContract {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_HEX = "hex";
         public static final String COLUMN_CREATED = "userMade";
+        public static final String COLUMN_SELECTED = "selected";
     }
 
     /**

@@ -48,4 +48,11 @@ public class select extends C {
         return "select";
     }
 
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("the (");
+        getParameter(DataType.INT, 0).explainOperation(string);
+        string.append(") letter in the site name");
+    }
+
 }

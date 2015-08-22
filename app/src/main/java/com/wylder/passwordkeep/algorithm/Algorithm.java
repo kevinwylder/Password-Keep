@@ -67,26 +67,33 @@ public class Algorithm {
      * Method to construct a human readable string from the list of actions
      */
     @Override
-    public String toString(){
-        if(actions.size() == 1){
-            return actions.get(0).toString();
-        } else {
-            StringBuilder builder = new StringBuilder("First, ");
-            for(int i = 0; i < actions.size(); i++){
-                builder.append(actions.get(i).toString());
-                if(i < actions.size() - 1){
-                    builder.append(", then ");
+    public String toString() {
+        try {
+            if(actions.size() == 1){
+                StringBuilder builder = new StringBuilder();
+                actions.get(0).explainOperation(builder);
+                return builder.toString();
+            } else {
+                StringBuilder builder = new StringBuilder("First, ");
+                for(int i = 0; i < actions.size(); i++){
+                    actions.get(i).explainOperation(builder);
+                    if(i < actions.size() - 1){
+                        builder.append(". Next ");
+                    }
                 }
+                return builder.toString();
             }
-            return builder.toString();
+        } catch (SyntaxError error) {
+            return "Syntax error: " + error.getMessage();
         }
     }
 
     /**
-     *
+     * return the actions in this algorithm
+     * @return
      */
-    public A[] getActions(){
-        return (A[]) actions.toArray();
+    public ArrayList<A> getActions(){
+        return actions;
     }
 
 }

@@ -47,4 +47,12 @@ public class remove extends A {
     public String getOperatorName() {
         return "remove";
     }
+
+
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("remove the character at position (");
+        getParameter(DataType.INT, 0).explainOperation(string);
+        string.append(")");
+    }
 }

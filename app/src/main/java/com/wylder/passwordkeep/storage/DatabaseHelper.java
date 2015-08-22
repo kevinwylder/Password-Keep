@@ -26,7 +26,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContract.Algorithms._ID + " INTEGER PRIMARY KEY, " +
                 DatabaseContract.Algorithms.COLUMN_NAME + " TEXT, " +
                 DatabaseContract.Algorithms.COLUMN_HEX + " TEXT, " +
-                DatabaseContract.Algorithms.COLUMN_CREATED + " INTEGER );"
+                DatabaseContract.Algorithms.COLUMN_CREATED + " INTEGER, " +
+                DatabaseContract.Algorithms.COLUMN_SELECTED + " INTEGER );"
         );
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + DatabaseContract.History.TABLE_NAME + " (" +

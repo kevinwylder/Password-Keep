@@ -49,4 +49,9 @@ public class len extends I {
         bin.push(true);
         bin.push(true);
     }
+
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("the length of the site name");
+    }
 }

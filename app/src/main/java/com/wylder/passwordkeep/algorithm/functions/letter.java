@@ -47,4 +47,12 @@ public class letter extends C {
     public String getOperatorName() {
         return "letter";
     }
+
+
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("the literal character [");
+        getParameter(DataType.CHAR, 1).explainOperation(string);
+        string.append("]");
+    }
 }

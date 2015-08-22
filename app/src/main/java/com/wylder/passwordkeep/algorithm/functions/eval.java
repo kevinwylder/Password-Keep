@@ -47,6 +47,13 @@ public class eval extends I {
     }
 
     @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("the index [");
+        getParameter(DataType.CHAR, 0).explainOperation(string);
+        string.append("] is in the alphabet");
+    }
+
+    @Override
     public String getOperatorName() {
         return "eval";
     }

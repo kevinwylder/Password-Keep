@@ -73,6 +73,21 @@ public class AlgorithmView extends SurfaceView implements SurfaceHolder.Callback
     }
 
     /**
+     * set this view's algorithm. If an algorithm is set, remove the OnTouchListener
+     * @param algorithm the algorithm to show
+     */
+    public void setAlgorithm(Algorithm algorithm){
+        actions.clear();
+        ArrayList<A> actionTokens = algorithm.getActions();
+        for(A action : actionTokens){
+            TokenBox box = new TokenBox(DataType.ACTION);
+            box.buildTree(action);
+            actions.add(box);
+        }
+        this.setOnTouchListener(null);
+    }
+
+    /**
      * Interface to be called when this AlgorithmView's tree changes
      */
     protected interface OnTreeChanged {

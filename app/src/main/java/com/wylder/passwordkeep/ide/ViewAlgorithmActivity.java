@@ -51,7 +51,7 @@ public class ViewAlgorithmActivity extends Activity {
         binaryText.setText("Algorithm binary code: " + Integer.toBinaryString(Integer.parseInt(hex, 16)));
         explainText = (TextView) findViewById(R.id.explanation);
         try {
-            explainText.setText(algorithm.getExplanation());
+            explainText.setText(algorithm.toString());
             AlgorithmView algorithmView = (AlgorithmView) findViewById(R.id.algorithmView);
             algorithmView.setAlgorithm(algorithm);
         } catch (Exception e){

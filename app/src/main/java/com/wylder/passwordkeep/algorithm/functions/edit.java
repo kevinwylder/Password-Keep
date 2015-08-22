@@ -53,4 +53,13 @@ public class edit extends A {
         super.getBytecode(bin);
     }
 
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("edit the character at position (");
+        getParameter(DataType.INT, 1).explainOperation(string);
+        string.append(") to be [");
+        getParameter(DataType.CHAR, 0).explainOperation(string);
+        string.append("]");
+    }
+
 }

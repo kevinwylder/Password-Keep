@@ -205,4 +205,15 @@ public class TokenBox  {
         return null;    // if none of the children had it, the point was probably blank
     }
 
+    /**
+     * use this complete token to fill out all children boxes
+     * @param token the token to build the tree off of
+     */
+    public void buildTree(Token token){
+        setToken(token);
+        for (int i = 0; i < children.size(); i++) {
+            children.get(i).buildTree(token.parameters.get(i));
+        }
+    }
+
 }

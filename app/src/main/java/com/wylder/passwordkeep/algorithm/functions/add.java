@@ -49,5 +49,11 @@ public class add extends A {
         super.getBytecode(bin);
     }
 
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("add [");
+        getParameter(DataType.CHAR, 0).explainOperation(string);
+        string.append("] to the end of the password.");
+    }
 
 }

@@ -10,7 +10,7 @@ import java.util.Stack;
  */
 public abstract class Token {
 
-    private ArrayList<Token> parameters = new ArrayList<>();
+    public ArrayList<Token> parameters = new ArrayList<>();
 
     /**
      * method to get a parameter and ensure it will be the correct type
@@ -72,6 +72,10 @@ public abstract class Token {
         }
     }
 
+    /**
+     * get the datatype of this token
+     * @return the DataType enum of this token
+     */
     public abstract DataType getDataType();
 
     /**
@@ -93,5 +97,11 @@ public abstract class Token {
             child.getBytecode(bin);
         }
     }
+
+    /**
+     * explain this token by parsing the tree
+     * @param string
+     */
+    public abstract void explainOperation(StringBuilder string) throws SyntaxError;
 
 }

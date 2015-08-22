@@ -35,6 +35,13 @@ public class capitalize extends C {
     }
 
     @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("the capitalized letter [");
+        getParameter(DataType.CHAR, 0).explainOperation(string);
+        string.append("]");
+    }
+
+    @Override
     public DataType getDataType() {
         return DataType.CHAR;
     }

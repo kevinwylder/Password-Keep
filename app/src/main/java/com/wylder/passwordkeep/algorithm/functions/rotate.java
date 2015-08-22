@@ -57,4 +57,14 @@ public class rotate extends C {
     public String getOperatorName() {
         return "rotate";
     }
+
+
+    @Override
+    public void explainOperation(StringBuilder string) throws SyntaxError {
+        string.append("the character [");
+        getParameter(DataType.CHAR, 0).explainOperation(string);
+        string.append("] rotated (");
+        getParameter(DataType.INT, 1).explainOperation(string);
+        string.append(") letters through the alphabet");
+    }
 }
