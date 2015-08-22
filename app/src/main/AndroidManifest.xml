@@ -11,9 +11,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ide.BuildAlgorithmActivity" >
-
-        </activity>
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".ide.BuildAlgorithmActivity" />
+        
     </application>
 
 </manifest>

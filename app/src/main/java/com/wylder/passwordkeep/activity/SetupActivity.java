@@ -1,9 +1,10 @@
 package com.wylder.passwordkeep.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-
-import com.wylder.passwordkeep.R;
+import android.view.View;
+import android.widget.Button;
 
 /**
  * Created by kevin on 8/9/15.
@@ -15,7 +16,16 @@ public class SetupActivity extends FragmentActivity{
     @Override
     protected void onCreate(Bundle sis){
         super.onCreate(sis);
-        setContentView(R.layout.main);
+        Button button = new Button(this);
+        button.setText("Enter MainActivity");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SetupActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        setContentView(button);
     }
 
 }
