@@ -23,9 +23,8 @@ public class MainActivity extends Activity {
         RecyclerView scroller = (RecyclerView) findViewById(R.id.recyclerView);
         scroller.setHasFixedSize(true);
         scroller.setLayoutManager(new LinearLayoutManager(this));
-        scroller.setAdapter(new MainAdapter());
-
-
+        MainAdapter adapter = new MainAdapter();
+        scroller.setAdapter(adapter);
     }
 
 }

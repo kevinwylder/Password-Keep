@@ -43,4 +43,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     public int getItemCount() {
         return 10;
     }
+
+    public void setSearchString() {
+
+    }
 }

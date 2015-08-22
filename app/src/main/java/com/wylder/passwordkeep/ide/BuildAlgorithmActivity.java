@@ -19,6 +19,7 @@ import com.wylder.passwordkeep.algorithm.Algorithm;
 import com.wylder.passwordkeep.algorithm.DataType;
 import com.wylder.passwordkeep.algorithm.EvaluationError;
 import com.wylder.passwordkeep.algorithm.SyntaxError;
+import com.wylder.passwordkeep.storage.BasePassword;
 import com.wylder.passwordkeep.storage.DatabaseOperator;
 
 /**
@@ -69,7 +70,7 @@ public class BuildAlgorithmActivity extends Activity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try{
                     Algorithm algorithm = algorithmView.getAlgorithm();
-                    String output = algorithm.generatePassword("password", s.toString());
+                    String output = algorithm.generatePassword(BasePassword.getPassword(), s.toString());
                     evalOutput.setText(output);
                 } catch (EvaluationError | SyntaxError evaluationError) {
                     evalOutput.setText(evaluationError.getMessage());
@@ -84,7 +85,7 @@ public class BuildAlgorithmActivity extends Activity {
                     Algorithm algorithm = algorithmView.getAlgorithm();
                     syntaxOutput.setText("Hex code: " + algorithm.getHex());
                     if (testSite.getText().length() > 0) {
-                        evalOutput.setText(algorithm.generatePassword("password", testSite.getText().toString()));
+                        evalOutput.setText(algorithm.generatePassword(BasePassword.getPassword(), testSite.getText().toString()));
                     }
                     submit.setEnabled(true);
                 } catch (SyntaxError error) {
@@ -110,8 +111,10 @@ public class BuildAlgorithmActivity extends Activity {
                 try {
                     String hexCode = algorithmView.getAlgorithm().getHex();
                     String algName = name.getText().toString();
-                    databaseOperator.addAlgorithm(algName, hexCode);
-                    finish();
+                    if(databaseOperator.databaseReady()) {
+                        databaseOperator.addAlgorithm(algName, hexCode);
+                        finish();
+                    }
                 } catch (SyntaxError error) {
                     syntaxOutput.setText(error.getMessage());
                 }

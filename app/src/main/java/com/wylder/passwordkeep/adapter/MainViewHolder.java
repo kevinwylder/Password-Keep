@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wylder.passwordkeep.R;
+import com.wylder.passwordkeep.storage.BasePassword;
 
 /**
  * Created by kevin on 8/21/15.
@@ -30,7 +31,7 @@ public class MainViewHolder extends RecyclerView.ViewHolder {
      */
     public void randomize(int i){
         site.setText("Website number " + i);
-        password.setText("password" + i);
+        password.setText(BasePassword.getPassword() + i);
     }
 
 }
