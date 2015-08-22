@@ -74,8 +74,11 @@ public class BasePassword {
     public boolean checkPassword(String password){
         try {
             String givenHash = hashPassword(password);
-            String setHash = preferences.getString(PASSWORD, null);
-            return setHash != null && setHash.equals(givenHash);
+            String setHash = preferences.getString(PASSWORD, IMPOSSIBLE_HASH);
+            if(setHash.equals(givenHash)){
+                basePassword = password;
+                return true;
+            } else return false;
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException | NullPointerException e){
             return false;
         }
