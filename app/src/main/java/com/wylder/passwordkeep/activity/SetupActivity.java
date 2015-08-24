@@ -37,7 +37,7 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
             setViewFragment(fragment);
         } else if (operator.getSelectedAlgorithm() == null) {
             getActionBar().setTitle("Select an Algorithm");
-            AlgorithmFragment fragment = AlgorithmFragment.newInstance();
+            AlgorithmFragment fragment = AlgorithmFragment.newInstance(operator);
             setViewFragment(fragment);
         } else {
             LoginFragment fragment = LoginFragment.newInstance();
@@ -61,7 +61,7 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
      */
     @Override
     public void passwordSelected() {
-        AlgorithmFragment fragment = AlgorithmFragment.newInstance();
+        AlgorithmFragment fragment = AlgorithmFragment.newInstance(operator);
         FragmentManager manager = getFragmentManager();
         manager.popBackStack();
         FragmentTransaction transaction = manager.beginTransaction();

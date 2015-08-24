@@ -99,4 +99,25 @@ public class DatabaseOperator {
         }
     }
 
+    /**
+     * getter method for when it's best to just have the cursor itself.
+     * @return the database
+     */
+    public SQLiteDatabase getDatabase(){
+        return database;
+    }
+
+    public void setSelected(String algorithmCode) {
+        database.execSQL(
+                "UPDATE " +
+                        DatabaseContract.Algorithms.TABLE_NAME +
+                        " SET " + DatabaseContract.Algorithms.COLUMN_SELECTED + " = 0;"
+        );
+        database.execSQL(
+                "UPDATE " +
+                        DatabaseContract.Algorithms.TABLE_NAME +
+                        " SET " + DatabaseContract.Algorithms.COLUMN_SELECTED + " = 1 " +
+                        " WHERE " + DatabaseContract.Algorithms.COLUMN_HEX + " = " + algorithmCode
+        );
+    }
 }

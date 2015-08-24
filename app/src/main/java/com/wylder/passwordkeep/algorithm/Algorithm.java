@@ -66,8 +66,7 @@ public class Algorithm {
     /**
      * Method to construct a human readable string from the list of actions
      */
-    @Override
-    public String toString() {
+    public String getDescription() {
         try {
             if(actions.size() == 1){
                 StringBuilder builder = new StringBuilder();

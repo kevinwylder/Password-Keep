@@ -20,10 +20,10 @@ public final class DatabaseContract {
      */
     public static abstract class Algorithms implements BaseColumns {
         public static final String TABLE_NAME = "algorithms";
-        public static final String COLUMN_NAME = "name";
-        public static final String COLUMN_HEX = "hex";
-        public static final String COLUMN_CREATED = "userMade";
-        public static final String COLUMN_SELECTED = "selected";
+        public static final String COLUMN_NAME = "name";        // the string name
+        public static final String COLUMN_HEX = "hex";          // the string code
+        public static final String COLUMN_CREATED = "userMade"; // 1 if user made, 0 if not
+        public static final String COLUMN_SELECTED = "selected";// 1 if selected, 0 if not
     }
 
     /**

@@ -75,6 +75,7 @@ public class LoginFragment extends Fragment {
         }
         if(password.checkPassword(passwordField.getText().toString())) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         } else {
             passwordField.requestFocus();
