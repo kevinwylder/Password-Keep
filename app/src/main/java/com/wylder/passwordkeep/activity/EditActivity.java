@@ -8,4 +8,5 @@ import android.app.Activity;
  * Activity that edits either the password or selected algorithm. Called from MainActivity only
  */
 public class EditActivity extends Activity {
+
 }

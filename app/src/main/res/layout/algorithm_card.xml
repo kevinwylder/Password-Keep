@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
         android:padding="10dp">
 
 
@@ -15,28 +16,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Rotate and Add 4"
-            android:id="@+id/name" />
+            android:background="?android:attr/selectableItemBackground"
+            android:id="@+id/name"
+            android:gravity="center_vertical"
+            android:text="Name"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="this is a really long undecipherable string of text to describe this algorithm sometimes it can be really really long and i am not sure how it will look in that case but we&apos;ll see"
             android:id="@+id/description"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentStart="true"
+            android:text="Description"
             android:layout_below="@+id/name"
-            android:layout_marginTop="6dp"
-            android:layout_toStartOf="@+id/radioButton" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/radioButton"
+            android:layout_margin="5dp"
+            android:minHeight="30dp"
+            android:gravity="center_vertical" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radioButton"
-            android:layout_alignParentTop="true"
+            android:checked="false"
+            android:layout_below="@+id/imageView"
             android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/description"
-            android:checked="false" />
+            android:layout_alignBottom="@+id/description" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/ic_expand_more_black_24dp"
+            android:layout_alignParentEnd="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_toEndOf="@+id/description"
+            android:layout_alignParentTop="true"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" />
 
     </RelativeLayout>
 

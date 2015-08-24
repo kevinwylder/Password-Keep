@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 
 import com.wylder.passwordkeep.R;
 import com.wylder.passwordkeep.algorithm.Algorithm;
@@ -28,9 +29,19 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
     ArrayList<String> names = new ArrayList<>();
 
     private int position = -1;
+    private RadioButton selected = null;
 
     public AlgorithmAdapter(DatabaseOperator operator){
         this.operator = operator;
+        loadFromSource();
+    }
+
+    /**
+     * read the databaseoperator and fill the lists
+     */
+    public void loadFromSource() {
+        algorithms.clear();
+        names.clear();
         Cursor cursor = operator.getDatabase().query(
                 DatabaseContract.Algorithms.TABLE_NAME,                 // table name
                 new String[]{                                           // columns
@@ -45,7 +56,7 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
                 // order by
                 DatabaseContract.Algorithms.COLUMN_SELECTED + " DESC , "
                         + DatabaseContract.Algorithms.COLUMN_CREATED + " DESC, "
-                                    + DatabaseContract.Algorithms.COLUMN_NAME + " ASC" ,
+                        + DatabaseContract.Algorithms.COLUMN_NAME + " ASC" ,
                 null    // limit
         );
         while(cursor.moveToNext()){
@@ -56,7 +67,6 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
         }
     }
 
-
     /**
      * add another algorithm to the end of this recycleriew. If the algorithm doesn't compile it is
      * not added. be sure to call notifyDatasetChanged();
@@ -66,7 +76,7 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
         try{
             Algorithm algorithm = factory.buildAlgorithm(code);
             algorithms.add(algorithm);
-            if (checked) {
+            if (checked && position == -1) {
                 position = names.size();
             }
             names.add(title);
@@ -113,9 +123,13 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
      * @param position
      */
     @Override
-    public void onSelect(int position) {
+    public void onSelect(int position, RadioButton selected) {
         this.position = position;
-        notifyDataSetChanged();
+        Log.e("KevinRuntime", "Selecting");
+        if (this.selected != null) {
+            this.selected.setChecked(false);
+        }
+        this.selected = selected;
     }
 
     /**
@@ -124,7 +138,7 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
      */
     @Override
     public void onDeleteSelf(Algorithm self) {
-
+        Log.e("KevinRuntime", "Deleting");
     }
 
     /**
@@ -133,6 +147,6 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
      */
     @Override
     public void onViewSelf(Algorithm self) {
-
+        Log.e("KevinRuntime", "Viewing");
     }
 }

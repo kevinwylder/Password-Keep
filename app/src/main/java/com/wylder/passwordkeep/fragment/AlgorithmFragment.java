@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.wylder.passwordkeep.R;
 import com.wylder.passwordkeep.adapter.AlgorithmAdapter;
@@ -26,6 +27,8 @@ public class AlgorithmFragment extends Fragment implements View.OnClickListener 
 
     DatabaseOperator operator;
     AlgorithmAdapter adapter;
+    Toast toast;
+    private boolean allowCancel = true;
 
     public static AlgorithmFragment newInstance(DatabaseOperator operator){
         AlgorithmFragment fragment = new AlgorithmFragment();
@@ -48,9 +51,9 @@ public class AlgorithmFragment extends Fragment implements View.OnClickListener 
         root.findViewById(R.id.button7).setOnClickListener(this);
         root.findViewById(R.id.button8).setOnClickListener(this);
 
-        // disable cancel button if there is no selected algorithm
-        if (adapter.getSelected() == null) {
-            root.findViewById(R.id.button8).setEnabled(false);
+        // hide the cancel button if necessary
+        if (!allowCancel) {
+            root.findViewById(R.id.button8).setVisibility(View.GONE);
         }
 
         // add button will start the IDE for a result
@@ -67,7 +70,10 @@ public class AlgorithmFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.button7) {
+        if(toast != null) {
+            toast.cancel();
+        }
+        if (view.getId() == R.id.button7) { // apply button
             // remove the previous selected algorithm in the database
             try {
                 String code = adapter.getSelected().getHex();
@@ -75,9 +81,31 @@ public class AlgorithmFragment extends Fragment implements View.OnClickListener 
             } catch (SyntaxError error) {
                 Log.e("KevinRuntime", "error generating hex code when setting selected: " + error.getMessage());
                 return; // do not finish the activity
+            } catch (NullPointerException exception) {
+                toast = Toast.makeText(getActivity(), "Select an Algorithm", Toast.LENGTH_SHORT);
+                toast.show();
+                return; // do not finish the activity
             }
         }
-        getActivity().finish();
+        try {
+            ((OnSelectAlgoithm) getActivity()).onSelect(view.getId() == R.id.button8);
+        } catch (ClassCastException exception){
+            exception.printStackTrace();
+            getActivity().finish();
+        }
+    }
+
+    public void refreshAdapter(){
+        adapter.loadFromSource();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void setAllowCancel(boolean allowCancel) {
+        this.allowCancel = allowCancel;
+    }
+
+    interface OnSelectAlgoithm {
+        void onSelect(boolean cancel);
     }
 
 }

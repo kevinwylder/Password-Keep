@@ -51,8 +51,8 @@ public class letter extends C {
 
     @Override
     public void explainOperation(StringBuilder string) throws SyntaxError {
-        string.append("the literal character [");
-        getParameter(DataType.CHAR, 1).explainOperation(string);
-        string.append("]");
+        string.append("the literal character (");
+        getParameter(DataType.INT, 0).explainOperation(string);
+        string.append(")");
     }
 }

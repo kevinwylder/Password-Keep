@@ -22,6 +22,7 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
 
     BasePassword password;
     DatabaseOperator operator;
+    Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle sis) {
@@ -30,14 +31,10 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
         password = new BasePassword(this);
         setContentView(R.layout.setup_login);
         // show a different screen depending on what needs to be set up
-        if(password.passwordNotSet()){
+        if(password.passwordNotSet() || operator.getSelectedAlgorithm() == null){
             getActionBar().setTitle("Welcome to Password Keep");
             PasswordFragment fragment = PasswordFragment.newInstance();
             fragment.setOnPasswordSelect(this);
-            setViewFragment(fragment);
-        } else if (operator.getSelectedAlgorithm() == null) {
-            getActionBar().setTitle("Select an Algorithm");
-            AlgorithmFragment fragment = AlgorithmFragment.newInstance(operator);
             setViewFragment(fragment);
         } else {
             LoginFragment fragment = LoginFragment.newInstance();
@@ -50,10 +47,19 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
      * @param fragment the fragment to show
      */
     private void setViewFragment(Fragment fragment) {
+        currentFragment = fragment;
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (currentFragment instanceof AlgorithmFragment){
+            ((AlgorithmFragment) currentFragment).refreshAdapter();
+        }
     }
 
     /**
@@ -62,6 +68,7 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
     @Override
     public void passwordSelected() {
         AlgorithmFragment fragment = AlgorithmFragment.newInstance(operator);
+        fragment.setAllowCancel(false);
         FragmentManager manager = getFragmentManager();
         manager.popBackStack();
         FragmentTransaction transaction = manager.beginTransaction();
