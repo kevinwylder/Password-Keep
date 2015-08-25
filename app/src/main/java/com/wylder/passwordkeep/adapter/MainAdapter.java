@@ -83,7 +83,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
                 viewGroup,
                 false
         );
-        return new MainViewHolder(view);
+        return new MainViewHolder(view, operator, this);
     }
 
     /**
@@ -112,7 +112,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
             if(above != below) {
                 card.setDivider(Character.toString(below));
             } else {
-                card.setDivider(null);
+                card.setDivider("");
             }
         } else {
             card.setDivider(name.toUpperCase().substring(0, 1));

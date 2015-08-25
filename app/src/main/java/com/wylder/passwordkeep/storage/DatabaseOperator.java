@@ -145,4 +145,10 @@ public class DatabaseOperator {
         database.execSQL("DELETE FROM " + DatabaseContract.History.TABLE_NAME);
     }
 
+    public void deleteFromHistory(String name) {
+        database.execSQL(
+                "DELETE FROM " + DatabaseContract.History.TABLE_NAME +
+                        " WHERE " + DatabaseContract.History.COLUMN_SITE + " = '" + name + "';");
+    }
+
 }
