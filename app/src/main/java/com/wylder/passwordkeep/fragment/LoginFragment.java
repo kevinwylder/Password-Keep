@@ -75,8 +75,9 @@ public class LoginFragment extends Fragment {
         }
         if(password.checkPassword(passwordField.getText().toString())) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
+            getActivity().finish();
         } else {
             passwordField.requestFocus();
             toast = Toast.makeText(getActivity(), "Incorrect Password", Toast.LENGTH_SHORT);

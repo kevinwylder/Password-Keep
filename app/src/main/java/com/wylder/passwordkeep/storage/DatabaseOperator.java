@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.wylder.passwordkeep.algorithm.Algorithm;
@@ -20,21 +21,34 @@ public class DatabaseOperator {
 
     private boolean databaseReady = false;
     private SQLiteDatabase database = null;
+    private OnDatabaseReady listener = null;
 
     /**
      * Constructor that will spawn a thread and open a database asynchronously for use with the rest
      * of the methods
      * @param ctx the application's context used to open the database
      */
-    public DatabaseOperator(final Context ctx){
+    public DatabaseOperator(final Context ctx, @Nullable final OnDatabaseReady listener){
+        this.listener = listener;
         new Thread(){
             @Override
             public void run(){
                 DatabaseHelper helper = new DatabaseHelper(ctx);
                 database = helper.getWritableDatabase();
                 databaseReady = true;
+                if (listener != null) {
+                    listener.databaseReady(database);
+                }
             }
         }.start();
+    }
+
+    public DatabaseOperator(Context ctx) {
+        this(ctx, null);
+    }
+
+    public interface OnDatabaseReady {
+        void databaseReady(SQLiteDatabase database);
     }
 
     /**
@@ -117,7 +131,18 @@ public class DatabaseOperator {
                 "UPDATE " +
                         DatabaseContract.Algorithms.TABLE_NAME +
                         " SET " + DatabaseContract.Algorithms.COLUMN_SELECTED + " = 1 " +
-                        " WHERE " + DatabaseContract.Algorithms.COLUMN_HEX + " = " + algorithmCode
+                        " WHERE " + DatabaseContract.Algorithms.COLUMN_HEX + " = \"" + algorithmCode + "\""
         );
     }
+
+    public void addWebsite(String name) {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.History.COLUMN_SITE, name);
+        database.insert(DatabaseContract.History.TABLE_NAME, null, values);
+    }
+
+    public void clearHistory() {
+        database.execSQL("DELETE FROM " + DatabaseContract.History.TABLE_NAME);
+    }
+
 }

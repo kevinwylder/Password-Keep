@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +49,7 @@ public class BuildAlgorithmActivity extends Activity {
         // setup actionbar
         ActionBar actionBar = getActionBar();
         name = new EditText(this);
+        name.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         name.setHint("Algorithm Name");
         actionBar.setCustomView(name);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

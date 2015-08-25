@@ -147,6 +147,7 @@ public class AlgorithmAdapter extends RecyclerView.Adapter<AlgorithmHolder> impl
      */
     @Override
     public void onViewSelf(Algorithm self) {
+
         Log.e("KevinRuntime", "Viewing");
     }
 }

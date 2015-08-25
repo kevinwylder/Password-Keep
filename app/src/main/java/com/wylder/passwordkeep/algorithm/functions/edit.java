@@ -57,7 +57,7 @@ public class edit extends A {
     public void explainOperation(StringBuilder string) throws SyntaxError {
         string.append("edit the character at position (");
         getParameter(DataType.INT, 1).explainOperation(string);
-        string.append(") to be [");
+        string.append(") in the password to be [");
         getParameter(DataType.CHAR, 0).explainOperation(string);
         string.append("]");
     }

@@ -32,8 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + DatabaseContract.History.TABLE_NAME + " (" +
                 DatabaseContract.History._ID + " INTEGER PRIMARY KEY, " +
-                DatabaseContract.History.COLUMN_SITE + " TEXT, " +
-                DatabaseContract.History.COLUMN_LAST_USED + " INTEGER );"
+                DatabaseContract.History.COLUMN_SITE + " TEXT );"
         );
     }
 

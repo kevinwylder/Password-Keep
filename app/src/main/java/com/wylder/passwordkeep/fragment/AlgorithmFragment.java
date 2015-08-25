@@ -88,10 +88,10 @@ public class AlgorithmFragment extends Fragment implements View.OnClickListener 
             }
         }
         try {
-            ((OnSelectAlgoithm) getActivity()).onSelect(view.getId() == R.id.button8);
+            ((OnSelectAlgorithm) getActivity()).algorithmSelected(view.getId() == R.id.button8);
         } catch (ClassCastException exception){
             exception.printStackTrace();
-            getActivity().finish();
+          //  getActivity().finish();
         }
     }
 
@@ -104,8 +104,7 @@ public class AlgorithmFragment extends Fragment implements View.OnClickListener 
         this.allowCancel = allowCancel;
     }
 
-    interface OnSelectAlgoithm {
-        void onSelect(boolean cancel);
+    public interface OnSelectAlgorithm {
+        void algorithmSelected(boolean cancel);
     }
-
 }

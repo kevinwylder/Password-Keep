@@ -17,9 +17,9 @@ public class remove extends A {
 
     @Override
     public void perform(StringBuilder basePassword, String siteName) throws EvaluationError, SyntaxError {
-        int position = ((I) getParameter(DataType.INT, 0)).evaluate(siteName) % siteName.length();
+        int position = ((I) getParameter(DataType.INT, 0)).evaluate(siteName) % basePassword.length();
         if(position < 0){
-            position += siteName.length();
+            position += basePassword.length();
         }
         basePassword.deleteCharAt(position);
     }

@@ -11,7 +11,7 @@ public final class DatabaseContract {
 
     public DatabaseContract(){}
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "PasswordKeep.db";
 
     /**
@@ -33,7 +33,6 @@ public final class DatabaseContract {
     public static abstract class History implements BaseColumns {
         public static final String TABLE_NAME = "history";
         public static final String COLUMN_SITE = "siteName";
-        public static final String COLUMN_LAST_USED = "lastUsed";
     }
 
 

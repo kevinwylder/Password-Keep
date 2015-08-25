@@ -13,7 +13,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity"/>
+        <activity
+            android:name=".activity.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".activity.EditActivity" />
         <activity android:name=".ide.BuildAlgorithmActivity" />
         <activity android:name=".ide.ViewAlgorithmActivity" />

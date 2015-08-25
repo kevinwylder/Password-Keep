@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_algorithm"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Change Algorithm"/>
+
+    <item
+        android:id="@+id/menu_password"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Change Password"/>
+
+    <item
+        android:id="@+id/menu_history"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Clear History"/>
+
+</menu>

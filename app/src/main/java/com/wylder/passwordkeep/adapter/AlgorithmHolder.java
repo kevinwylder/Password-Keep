@@ -3,14 +3,18 @@ package com.wylder.passwordkeep.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wylder.passwordkeep.R;
 import com.wylder.passwordkeep.algorithm.Algorithm;
+import com.wylder.passwordkeep.algorithm.SyntaxError;
+import com.wylder.passwordkeep.ide.ViewAlgorithmActivity;
 
 /**
  * Created by kevin on 8/22/15.
@@ -46,6 +50,14 @@ public class AlgorithmHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 listener.onViewSelf(represent);
+                try {
+                    Intent intent = new Intent(view.getContext(), ViewAlgorithmActivity.class);
+                    intent.putExtra(ViewAlgorithmActivity.HEX_CODE, represent.getHex());
+                    view.getContext().startActivity(intent);
+                } catch (SyntaxError error) {
+                    Toast.makeText(view.getContext(), "Cannot view algorithm", Toast.LENGTH_SHORT).show();
+                    error.printStackTrace();
+                }
             }
         };
 

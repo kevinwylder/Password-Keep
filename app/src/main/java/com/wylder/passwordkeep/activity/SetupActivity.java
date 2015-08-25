@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.wylder.passwordkeep.R;
@@ -18,7 +19,7 @@ import com.wylder.passwordkeep.storage.DatabaseOperator;
  *
  * Guides the user through the setup process if not ready and logs them in
  */
-public class SetupActivity extends Activity implements PasswordFragment.OnPasswordSelect {
+public class SetupActivity extends Activity implements PasswordFragment.OnPasswordSelect, AlgorithmFragment.OnSelectAlgorithm {
 
     BasePassword password;
     DatabaseOperator operator;
@@ -29,7 +30,7 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
         super.onCreate(sis);
         operator = new DatabaseOperator(this);
         password = new BasePassword(this);
-        setContentView(R.layout.setup_login);
+        setContentView(R.layout.display_fragment);
         // show a different screen depending on what needs to be set up
         if(password.passwordNotSet() || operator.getSelectedAlgorithm() == null){
             getActionBar().setTitle("Welcome to Password Keep");
@@ -68,6 +69,7 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
     @Override
     public void passwordSelected() {
         AlgorithmFragment fragment = AlgorithmFragment.newInstance(operator);
+        currentFragment = fragment;
         fragment.setAllowCancel(false);
         FragmentManager manager = getFragmentManager();
         manager.popBackStack();
@@ -77,4 +79,13 @@ public class SetupActivity extends Activity implements PasswordFragment.OnPasswo
         transaction.commit();
         getActionBar().setTitle("Select an Algorithm");
     }
+
+    @Override
+    public void algorithmSelected(boolean cancel) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        finish();
+    }
+
 }
